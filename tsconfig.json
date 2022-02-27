@@ -1,20 +1,29 @@
 {
+  "compileOnSave": false,
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
     "module": "esnext",
+    "types": ["node"],
     "moduleResolution": "node",
+    "esModuleInterop": true,
+    "typeRoots": ["./src/@types", "./node_modules/@types"],
+    "lib": ["dom", "es2015", "es2017"],
+    "jsx": "react",
+    "sourceMap": true,
+    "strict": true,
     "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx"
+    "noUnusedLocals": true,
+    "noImplicitAny": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true,
+    "baseUrl": "./",
+    "paths": {
+      "~/*": ["src/*"],
+      "@turn/styled": ["src/styled"]
+    }
   },
-  "include": ["src"]
+  "include": ["./src/**/*", "./test-utils/**/*", "./__mocks__/**/*"],
+  "exclude": ["node_modules"]
 }
