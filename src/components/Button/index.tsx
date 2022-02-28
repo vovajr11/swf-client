@@ -1,20 +1,29 @@
-import React from "react";
-import { GradientBtn, PrimaryBtn } from "./ButtonStyles";
+import React from 'react';
+import styled from 'styled-components';
+import { sizes, looks } from './ButtonStyles';
 
-interface IButton {
-  label: string;
-  styleType: string;
+interface ButtonProps {
+    onClick?: React.MouseEventHandler<HTMLButtonElement>;
+    children?: React.ReactNode;
+    className?: string;
+    radius?: number;
+    size?: 'sm' | 'md' | 'lg';
+    look?: 'primary';
+    type?: 'button' | 'submit' | 'reset';
 }
 
-const Button = (config: IButton) => {
-  const { label, styleType } = config;
+const Button = ({ onClick, className, children, type }: ButtonProps) => (
+    <button onClick={onClick} className={className} type={type}>
+        {children}
+    </button>
+);
 
-  return (
-    <>
-      {styleType === "gradient" && <GradientBtn>{label}</GradientBtn>}
-      {styleType === "primary" && <PrimaryBtn>{label}</PrimaryBtn>}
-    </>
-  );
-};
+const StyledButton = styled(Button)`
+    ${({ size = 'md' }) => sizes[size]};
+    ${({ look = 'primary' }) => looks[look]};
 
-export default Button;
+    outline: none;
+    border-radius: ${({ radius = 5 }) => radius}px;
+`;
+
+export default StyledButton;
