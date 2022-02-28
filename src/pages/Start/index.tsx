@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Button from '../../components/Button';
-import Modal from '../../components/Modal';
-import LoginForm from '../../components/AuthForms/Login';
-import RegisterForm from '../../components/AuthForms/Register';
-import { ReactComponent as HomePictures } from '../../assets/svg/home.svg';
+import Button from '@components/Button';
+import Modal from '@components/Modal';
+import LoginForm from '@components/AuthForms/Login';
+import RegisterForm from '@components/AuthForms/Register';
+import { ReactComponent as HomePictures } from '@assets/svg/home.svg';
 import {
   Background,
   SectionStart,
