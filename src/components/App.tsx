@@ -1,5 +1,7 @@
-import { lazy, Suspense, useEffect } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import React, { lazy, Suspense } from "react";
+import { Routes, Route } from "react-router-dom";
+import { GlobalStyle } from "../theme/theme";
+// import Layout from "./Layout";
 
 const createChunk = (componentName: string) => {
   return lazy(() =>
@@ -9,15 +11,18 @@ const createChunk = (componentName: string) => {
   );
 };
 
-const HomePage = createChunk("Home");
+const StartPage = createChunk("Start");
 
 const App = () => {
   return (
     <Suspense fallback={<h1>Loading</h1>}>
+      <GlobalStyle />
+
       <Routes>
-        <Route path="/">
-          <Route path="home" element={<HomePage />} />
-        </Route>
+        <Route path="/" element={<StartPage />} />
+        {/* <Route path="/" element={<Layout />}> */}
+
+        {/* </Route> */}
       </Routes>
     </Suspense>
   );
