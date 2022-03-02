@@ -1,28 +1,45 @@
-import React, { lazy, Suspense } from "react";
-import { Routes, Route } from "react-router-dom";
-import { GlobalStyle } from "../theme/theme";
-// import Layout from "./Layout";
+import { lazy, Suspense, useEffect } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { GlobalStyle } from '../theme/theme';
+import { ProtectedRoute, AuthRoute } from './ProtectedRoute';
+import Layout from './Layout';
 
 const createChunk = (componentName: string) => {
   return lazy(() =>
-    import(`../pages/${componentName}`).then((module) => ({
+    import(`../pages/${componentName}`).then(module => ({
       default: module[componentName],
-    }))
+    })),
   );
 };
 
-const StartPage = createChunk("Start");
+const StartPage = createChunk('Start');
+const HomePage = createChunk('Home');
+const NotFoundPage = createChunk('NotFound');
 
 const App = () => {
+  useEffect(() => {});
   return (
     <Suspense fallback={<h1>Loading</h1>}>
       <GlobalStyle />
 
       <Routes>
-        <Route path="/" element={<StartPage />} />
-        {/* <Route path="/" element={<Layout />}> */}
+        <Route path="*" element={<NotFoundPage />} />
+        <Route path="/" element={<Navigate to="/start" />} />
+        <Route
+          path="/start"
+          element={
+            <AuthRoute>
+              <StartPage />
+            </AuthRoute>
+          }
+        />
 
-        {/* </Route> */}
+        <Route path="/" element={<Layout />}>
+          <Route
+            path="home"
+            element={<ProtectedRoute children={<HomePage />} />}
+          />
+        </Route>
       </Routes>
     </Suspense>
   );
