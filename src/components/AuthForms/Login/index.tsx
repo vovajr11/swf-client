@@ -1,9 +1,10 @@
-import React from 'react';
 import { Formik } from 'formik';
 import validation from './validation';
 import Input from '../../Input';
 import { Wrapp, Form, Title } from '../AuthFormsStyles';
 import Button from '../../Button';
+import { useDispatch } from 'react-redux';
+import { signInUser } from '@redux/auth/authAPI';
 
 interface IForm {
   email: string;
@@ -11,6 +12,7 @@ interface IForm {
 }
 
 const Login = () => {
+  const dispatch = useDispatch();
   const initialValues: IForm = { email: '', password: '' };
 
   return (
@@ -20,7 +22,7 @@ const Login = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={values => {
-          console.log({ values });
+          dispatch(signInUser(values));
         }}
         validationSchema={validation}
       >
