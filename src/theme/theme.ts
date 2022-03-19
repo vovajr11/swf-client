@@ -51,4 +51,10 @@ export const GlobalStyle = createGlobalStyle`
     border: none;
     cursor: pointer;
   }
+
+  textarea {
+    resize: none;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+}
 `;

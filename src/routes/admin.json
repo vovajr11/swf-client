@@ -1,0 +1,10 @@
+[
+  {
+    "path": "/create-course",
+    "label": "Створити курс"
+  },
+  {
+    "path": "/course-editor",
+    "label": "Редактор курсів"
+  }
+]

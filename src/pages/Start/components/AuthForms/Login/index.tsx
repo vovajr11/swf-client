@@ -1,10 +1,10 @@
 import { Formik } from 'formik';
-import validation from './validation';
-import Input from '../../Input';
-import { Wrapp, Form, Title } from '../AuthFormsStyles';
-import Button from '../../Button';
 import { useDispatch } from 'react-redux';
 import { signInUser } from '@redux/auth/authAPI';
+import Input from '@components/Input';
+import Button from '@components/Button';
+import validation from '@validations/loginForm';
+import { Wrapp, Form, Title } from '../AuthFormsStyles';
 
 interface IForm {
   email: string;

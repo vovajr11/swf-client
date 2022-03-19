@@ -1,9 +1,9 @@
-import React from "react";
-import { StyledInput } from "./InputStyles";
+import React from 'react';
+import { StyledInput } from './InputStyles';
 
 interface IInput {
   type: string;
-  name: string;
+  name?: string;
   placeholder: string;
   value: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;

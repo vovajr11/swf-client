@@ -2,8 +2,8 @@ import { css } from 'styled-components';
 
 export const sizes = {
     sm: css`
-        padding: 5px 20px;
-        font-size: 12px;
+        padding: 10px 20px;
+        font-size: 16px;
     `,
     md: css`
         padding: 15px 30px;

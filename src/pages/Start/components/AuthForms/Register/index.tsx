@@ -1,5 +1,3 @@
-
-
 const Register = () => {
   return <div>Register Form</div>;
 };

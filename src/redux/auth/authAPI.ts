@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-axios.defaults.baseURL = 'http://localhost:5000/api';
-
 const token = {
     set(token: string) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -16,7 +14,7 @@ export const signInUser = createAsyncThunk(
     'auth/signInUser',
     async (credentials: object, { rejectWithValue }) => {
         try {
-            const res = await axios.put('/users/sign-in', credentials);
+            const res = await axios.post('/auth/login', credentials);
             token.set(res.data.token);
 
             return res.data;
@@ -24,4 +22,23 @@ export const signInUser = createAsyncThunk(
             return rejectWithValue(error.response.data);
         }
     },
+);
+
+export const getCurrentUser = createAsyncThunk(
+    'auth/getCurrentUser',
+    async (_, { getState }) => {
+        const {
+            session: { token: persistedToken },
+        } = getState() as { session: { token: string } };
+
+        if (persistedToken) {
+            token.set(persistedToken);
+            const res = await axios.get('/users/current');
+
+            return res.data;
+        }
+
+        throw new Error('The user is not authorized');
+    },
+
 );

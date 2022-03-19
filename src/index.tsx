@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { BrowserRouter } from 'react-router-dom';
+import axios from 'axios';
 import { ThemeProvider } from 'styled-components';
 import { store, persistor } from './redux/store';
 import { defaultTheme } from './theme/theme';
 import App from './components/App';
+
+axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 
 ReactDOM.render(
   <React.StrictMode>

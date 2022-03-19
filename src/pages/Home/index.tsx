@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 export const Home = () => {
   return (
     <div>
-      <Link to="/start">Log</Link>
+      <Link to="/admin-panel">Log</Link>
     </div>
   );
 };
