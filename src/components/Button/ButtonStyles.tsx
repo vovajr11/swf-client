@@ -6,10 +6,12 @@ export const sizes = {
     padding: 3px 9px;
     font-size: 14px;
   `,
+
   md: css`
     padding: 5px 15px;
     font-size: 15px;
   `,
+
   lg: css`
     padding: 7px 21px;
     font-size: 16px;
