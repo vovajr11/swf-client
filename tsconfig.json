@@ -1,48 +1,12 @@
-// {
-//   "compileOnSave": false,
-//   "compilerOptions": {
-//     "target": "es5",
-//     "module": "esnext",
-//     "types": ["node"],
-//     "moduleResolution": "node",
-//     "esModuleInterop": true,
-//     "typeRoots": ["/src/@types", "/node_modules/@types"],
-//     "lib": ["dom", "es2015", "es2017"],
-//     "jsx": "react-jsx",
-//     "sourceMap": true,
-//     "strict": true,
-//     "resolveJsonModule": true,
-//     // "noUnusedLocals": true,
-//     "noImplicitAny": true,
-//     // "noUnusedParameters": true,
-//     "noFallthroughCasesInSwitch": true,
-//     "allowSyntheticDefaultImports": true,
-//     "downlevelIteration": true,
-//     "baseUrl": ".",
-//     "paths": {
-//       "@mui/styled-engine": ["/node_modules/@mui/styled-engine-sc"],
-//       "@components/*": ["src/components/*"],
-//       "@assets/*": ["src/assets/*"],
-//       "@redux/*": ["src/redux/*"],
-//       "@hooks/*": ["src/hooks/*"],
-//       "@types/*": ["src/@types/*"],
-//       "@interfaces/*": ["src/interfaces/*"],
-//       "@validations/*": ["src/validations/*"]
-//     }
-//   },
-//   "include": ["src"]
-//   // "include": ["./src/**/*", "./test-utils/**/*", "./__mocks__/**/*"],
-//   // "exclude": ["node_modules"]
-// }
 {
-  "extends": "./tsconfig.paths.json",
+  "compileOnSave": false,
   "compilerOptions": {
     "target": "es5",
     "module": "esnext",
     "types": ["node"],
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "typeRoots": ["./src/@types", "./node_modules/@types"],
+    "typeRoots": ["/src/@types", "/node_modules/@types"],
     "lib": ["dom", "es2015", "es2017"],
     "jsx": "react-jsx",
     "sourceMap": true,
@@ -54,18 +18,19 @@
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true,
     "downlevelIteration": true,
-    "baseUrl": ".",
-
+    "baseUrl": "./",
     "paths": {
-      "@mui/styled-engine": ["/node_modules/@mui/styled-engine-sc"],
       "@components/*": ["src/components/*"],
       "@assets/*": ["src/assets/*"],
       "@redux/*": ["src/redux/*"],
       "@hooks/*": ["src/hooks/*"],
       "@types/*": ["src/@types/*"],
       "@interfaces/*": ["src/interfaces/*"],
-      "@validations/*": ["src/validations/*"]
+      "@validations/*": ["src/validations/*"],
+      "@theme/*": ["src/theme/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src"],
+  // "include": ["./src/**/*", "./test-utils/**/*", "./__mocks__/**/*"],
+  "exclude": ["node_modules"]
 }

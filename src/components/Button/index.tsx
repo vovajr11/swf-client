@@ -1,29 +1,34 @@
 import React from 'react';
-import styled from 'styled-components';
-import { sizes, looks } from './ButtonStyles';
+import styled from '@emotion/styled';
+// import { theme } from '@theme/index';
+import { sizes, variants } from './ButtonStyles';
 
 interface ButtonProps {
-    onClick?: React.MouseEventHandler<HTMLButtonElement>;
-    children?: React.ReactNode;
-    className?: string;
-    radius?: number;
-    size?: 'sm' | 'md' | 'lg';
-    look?: 'primary';
-    type?: 'button' | 'submit' | 'reset';
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  children?: React.ReactNode;
+  className?: string;
+  size?: 'sm' | 'md' | 'lg';
+  variant?: 'outlined' | 'contained';
+  type?: 'button' | 'submit' | 'reset';
 }
 
 const Button = ({ onClick, className, children, type }: ButtonProps) => (
-    <button onClick={onClick} className={className} type={type}>
-        {children}
-    </button>
+  <button onClick={onClick} className={className} type={type}>
+    {children}
+  </button>
 );
 
 const StyledButton = styled(Button)`
-    ${({ size = 'md' }) => sizes[size]};
-    ${({ look = 'primary' }) => looks[look]};
+  ${({ size = 'md' }) => sizes[size]};
+  ${({ variant = 'contained' }) => variants[variant]};
 
-    outline: none;
-    border-radius: ${({ radius = 5 }) => radius}px;
+  line-height: 1.75;
+  letter-spacing: 0.02857em;
+  text-transform: uppercase;
+  font-weight: 500;
+  outline: none;
+  min-width: 64px;
+  border-radius: 4px;
 `;
 
 export default StyledButton;

@@ -8,7 +8,8 @@
       "@hooks/*": ["./src/hooks/*"],
       "@types/*": ["./src/@types/*"],
       "@interfaces/*": ["./src/interfaces/*"],
-      "@validations/*": ["./src/validations/*"]
+      "@validations/*": ["./src/validations/*"],
+      "@theme/*": ["./src/theme/*"]
     }
   }
 }

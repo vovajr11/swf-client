@@ -43,7 +43,7 @@ const CreateCourseForm = () => {
           />
           <ErrorMessage name="description" />
 
-          <Button type="submit" look="primary" size="sm">
+          <Button type="submit" variant="contained" size="sm">
             Ввійти
           </Button>
         </Form>

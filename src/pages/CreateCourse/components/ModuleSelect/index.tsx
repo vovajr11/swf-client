@@ -1,10 +1,6 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { useAppSelector } from '@hooks/appHook';
-import { useState } from 'react';
-import InputLabel from '@mui/material/InputLabel';
-// import MenuItem from '@mui/material/MenuItem';
-// import FormControl from '@mui/material/FormControl';
-// import Select from '@mui/material/Select';
+import { FormControl, Select, InputLabel, MenuItem } from '@mui/material';
 
 interface IModuleSelector {
   setModuleId: React.Dispatch<React.SetStateAction<string>>;
@@ -19,54 +15,29 @@ const ModuleSelect = ({ setModuleId }: IModuleSelector) => {
 
   const selectChange = (event: any) => {
     const currentItem = event.target;
-    const moduleId = currentItem[event.target.selectedIndex].id;
 
     setSelectedOption(currentItem.value);
-    setModuleId(moduleId);
   };
 
   return (
-    <>
-      <InputLabel>Age</InputLabel>
-      <h3>
-        {selectedOption.length > 0
-          ? 'Вибраний курс: ' + selectedOption
-          : 'Вибери курс'}
-      </h3>
-      {/* <FormControl sx={{ m: 1, minWidth: 80 }}>
-        <InputLabel>Age</InputLabel>
-        <Select
-          // labelId="demo-simple-select-autowidth-label"
-          // id="demo-simple-select-autowidth"
-          value={selectedOption}
-          onChange={selectChange}
-          autoWidth
-          label="Age"
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          {getAllModules.map(({ name, _id }) => {
-            return (
-              <option key={_id} id={_id} value={name}>
-                {name}
-              </option>
-            );
-          })}
-        </Select> */}
-
-      <select onChange={selectChange}>
-        <option defaultChecked={true} value=""></option>
+    <FormControl variant="standard" sx={{ m: 1, minWidth: 160 }}>
+      <InputLabel id="demo-simple-select-label">Вибір модуля</InputLabel>
+      <Select
+        labelId="demo-simple-select-label"
+        value={selectedOption}
+        onChange={selectChange}
+        autoWidth
+        label="Age"
+      >
         {getAllModules.map(({ name, _id }) => {
           return (
-            <option key={_id} id={_id} value={name}>
+            <MenuItem key={_id} value={name} onClick={() => setModuleId(_id)}>
               {name}
-            </option>
+            </MenuItem>
           );
         })}
-      </select>
-      {/* </FormControl> */}
-    </>
+      </Select>
+    </FormControl>
   );
 };
 

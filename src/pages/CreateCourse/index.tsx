@@ -60,10 +60,10 @@ export const CreateCourse = () => {
 
         <CourseInfoWrapper>
           <ButtonList>
-            <Button size="sm" onClick={() => toggleIsShowCourseModal()}>
+            <Button size="md" onClick={() => toggleIsShowCourseModal()}>
               Добавити Курс
             </Button>
-            <Button size="sm" onClick={() => toggleIsShowModuleModal()}>
+            <Button size="md" onClick={() => toggleIsShowModuleModal()}>
               Добавити Модуль
             </Button>
 

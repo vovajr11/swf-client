@@ -1,7 +1,16 @@
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArticleIcon from '@mui/icons-material/Article';
 import { useAppSelector } from '@hooks/appHook';
 import useToggle from '@hooks/useToggle';
 import { IChapter } from '@interfaces/course.interface';
-import { List } from './CourseInfoStyles';
+import {
+  List,
+  ItemFlex,
+  ArrowWrapp,
+  CourseName,
+  ModuleName,
+  ChapterName,
+} from './CourseInfoStyles';
 
 const CourseInfo = () => {
   const courses = useAppSelector(state => state.courses.items);
@@ -33,7 +42,12 @@ const CourseItem = ({ name, children }: IItem) => {
 
   return (
     <li>
-      <h2 onClick={() => toggleVisibility()}>{name}</h2>
+      <ItemFlex>
+        <ArrowWrapp isVisible={visible}>
+          <ArrowBackIosIcon />
+        </ArrowWrapp>
+        <CourseName onClick={() => toggleVisibility()}>{name}</CourseName>
+      </ItemFlex>
       {visible && children}
     </li>
   );
@@ -51,9 +65,10 @@ const Modules = ({ modules }: IModule) => {
           <List>
             {chapters.length > 0 ? (
               chapters.map(({ _id, name }) => (
-                <li key={_id}>
-                  <h4>{name}</h4>
-                </li>
+                <ItemFlex key={_id}>
+                  <ArticleIcon />
+                  <ChapterName>{name}</ChapterName>
+                </ItemFlex>
               ))
             ) : (
               <p>Тем нема</p>
@@ -70,7 +85,13 @@ const ModuleItem = ({ name, children }: IItem) => {
 
   return (
     <li>
-      <h3 onClick={() => toggleVisibility()}>{name}</h3>
+      <ItemFlex>
+        <ArrowWrapp isVisible={visible}>
+          <ArrowBackIosIcon />
+        </ArrowWrapp>
+        <ModuleName onClick={() => toggleVisibility()}>{name}</ModuleName>
+      </ItemFlex>
+
       {visible && children}
     </li>
   );

@@ -44,7 +44,7 @@ const Login = () => {
               onChange={handleChange}
             />
 
-            <Button type="submit" look="primary" size="md">
+            <Button type="submit" variant="contained" size="md">
               Ввійти
             </Button>
           </Form>

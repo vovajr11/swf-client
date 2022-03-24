@@ -48,10 +48,10 @@ export const Start = () => {
             </PreviewContent>
 
             <AuthButton>
-              <Button look="primary" size="md" onClick={openModalLogin}>
+              <Button variant="contained" size="md" onClick={openModalLogin}>
                 Вхід
               </Button>
-              <Button look="primary" size="md" onClick={openModalRegister}>
+              <Button variant="contained" size="md" onClick={openModalRegister}>
                 Реєстрація
               </Button>
             </AuthButton>

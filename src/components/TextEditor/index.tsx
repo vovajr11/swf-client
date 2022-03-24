@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-// import { AsyncThunk } from '@reduxjs/toolkit';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { Formik } from 'formik';
+import Button from '@components/Button';
 import EditorToolbar, { modules, formats } from './EditorToolbar';
 
 interface IForm {
@@ -44,7 +44,9 @@ const TextEditor = (config: ITextEditorConfig) => {
         <form onSubmit={handleSubmit}>
           <div style={{ display: 'flex', gap: '50px' }}>
             <EditorToolbar />
-            <button type="submit">Додати</button>
+            <Button type="submit" size="sm">
+              Додати
+            </Button>
           </div>
 
           <ReactQuill

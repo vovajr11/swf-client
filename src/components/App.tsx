@@ -1,7 +1,8 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { GlobalStyle } from '../theme/theme';
+import { Global } from '@emotion/react';
+import { GlobalStyle } from '../theme';
 import { ProtectedRoute, AuthRoute, AdminRoute } from './ProtectedRoute';
 import { getCurrentUser } from '../redux/auth/authAPI';
 import Layout from './Layout';
@@ -29,7 +30,7 @@ const App = () => {
   useEffect(() => {});
   return (
     <Suspense fallback={<h1>Loading</h1>}>
-      <GlobalStyle />
+      <Global styles={GlobalStyle} />
 
       <Routes>
         <Route path="*" element={<NotFoundPage />} />
