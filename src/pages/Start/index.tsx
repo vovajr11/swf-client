@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import Button from '@components/Button';
 import Modal from '@components/Modal';
-import LoginForm from '@components/AuthForms/Login';
-import RegisterForm from '@components/AuthForms/Register';
+import LoginForm from './components/AuthForms/Login';
+import RegisterForm from './components/AuthForms/Register';
 import { ReactComponent as HomePictures } from '@assets/svg/home.svg';
 import {
   Background,
@@ -48,10 +48,10 @@ export const Start = () => {
             </PreviewContent>
 
             <AuthButton>
-              <Button look="primary" size="md" onClick={openModalLogin}>
+              <Button variant="contained" size="md" onClick={openModalLogin}>
                 Вхід
               </Button>
-              <Button look="primary" size="md" onClick={openModalRegister}>
+              <Button variant="contained" size="md" onClick={openModalRegister}>
                 Реєстрація
               </Button>
             </AuthButton>

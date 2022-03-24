@@ -12,19 +12,22 @@
     "sourceMap": true,
     "strict": true,
     "resolveJsonModule": true,
-    "noUnusedLocals": true,
+    // "noUnusedLocals": true,
     "noImplicitAny": true,
-    "noUnusedParameters": true,
+    // "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true,
     "downlevelIteration": true,
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
       "@components/*": ["src/components/*"],
       "@assets/*": ["src/assets/*"],
       "@redux/*": ["src/redux/*"],
       "@hooks/*": ["src/hooks/*"],
-      "@types/*": ["src/@hooks/*"]
+      "@types/*": ["src/@types/*"],
+      "@interfaces/*": ["src/interfaces/*"],
+      "@validations/*": ["src/validations/*"],
+      "@theme/*": ["src/theme/*"]
     }
   },
   "include": ["src"],
