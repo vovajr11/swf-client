@@ -13,7 +13,7 @@ import {
 } from './CourseInfoStyles';
 
 const CourseInfo = () => {
-  const courses = useAppSelector(state => state.courses.items);
+  const courses = useAppSelector(state => state.courses.coursesForStudents);
 
   return (
     <ul>

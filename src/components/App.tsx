@@ -21,6 +21,7 @@ const NotFoundPage = createChunk('NotFound');
 const CreateCoursePage = createChunk('CreateCourse');
 const CoursesPage = createChunk('Courses');
 const CourseDetailsPage = createChunk('CourseDetails');
+const ChapterPage = createChunk('Chapter');
 
 const App = () => {
   const dispatch = useDispatch();
@@ -60,6 +61,11 @@ const App = () => {
           <Route
             path="courses/:courseName/:courseId"
             element={<ProtectedRoute children={<CourseDetailsPage />} />}
+          />
+
+          <Route
+            path="courses/:courseName/:courseId/:chapterName/:chapterId"
+            element={<ProtectedRoute children={<ChapterPage />} />}
           />
 
           <Route

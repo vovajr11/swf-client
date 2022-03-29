@@ -1,15 +1,15 @@
 import { useState } from 'react';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
+import { Link, useLocation } from 'react-router-dom';
+import { Menu, MenuItem, Box } from '@mui/material';
 import { TChapter } from '@interfaces/course.interface';
 import Button from '@components/Button';
-import { Box } from '@mui/material';
 
 interface IChapter {
   chapters: TChapter[];
 }
 
 const ModuleChapters = ({ chapters }: IChapter) => {
+  const currentURL = useLocation().pathname;
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -38,13 +38,16 @@ const ModuleChapters = ({ chapters }: IChapter) => {
         {chapters.map(({ name, _id }) => {
           return (
             <MenuItem key={_id} onClick={handleClose}>
-              {name}
+              <Link
+                to={{
+                  pathname: `${currentURL}/${name}/${_id}`,
+                }}
+              >
+                {name}
+              </Link>
             </MenuItem>
           );
         })}
-        {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem> */}
       </Menu>
     </Box>
   );

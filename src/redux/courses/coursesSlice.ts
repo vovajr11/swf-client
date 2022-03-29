@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ICourse } from '@interfaces/course.interface'
-import { createCourse, createModule, createChapter, getDetailsOfAllCourses } from './coursesAPI';
+import { createCourse, createModule, createChapter, getDetailsOfAllCourses, getCourseForAdmin } from './coursesAPI';
 
-const initialState = { items: [] } as ICourse;
+const initialState = { coursesForAdmin: [], coursesForStudents: [] } as ICourse;
 
 export const coursesSlice = createSlice({
     name: 'courses',
@@ -13,14 +13,14 @@ export const coursesSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(createCourse.fulfilled, (state, { payload }) => {
-                state.items.push(payload)
+                state.coursesForAdmin.push(payload)
             });
 
         builder
             .addCase(createModule.fulfilled, (state, { payload }) => {
                 const { courseId, resData } = payload;
 
-                state.items.map((item) =>
+                state.coursesForAdmin.map((item) =>
                     item.id === courseId ? item.modules.push(resData) : item,
                 );
             });
@@ -29,11 +29,7 @@ export const coursesSlice = createSlice({
             .addCase(createChapter.fulfilled, (state, { payload }) => {
                 const { moduleId, resData } = payload;
 
-                console.log(moduleId, 'moduleId');
-                console.log(resData, 'resData');
-
-
-                state.items
+                state.coursesForAdmin
                     .flatMap(({ modules }) => modules)
                     .map(module =>
                         module._id === moduleId
@@ -44,7 +40,12 @@ export const coursesSlice = createSlice({
 
         builder
             .addCase(getDetailsOfAllCourses.fulfilled, (state, { payload }) => {
-                state.items = payload.courses;
+                state.coursesForStudents = payload.courses;
+            })
+
+        builder
+            .addCase(getCourseForAdmin.fulfilled, (state, { payload }) => {
+                state.coursesForAdmin = payload.courses;
             })
     },
 })

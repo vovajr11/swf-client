@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { useAppSelector } from '@hooks/appHook';
-import Button from '@components/Button';
+import { useParams } from 'react-router-dom';
+import coursePrevImg from '@assets/img/coursePrevImg.jpg';
 import { IItem } from '@interfaces/course.interface';
 import { List, Item, Content } from './CourseDetailsStyles';
-import coursePrevImg from '@assets/img/coursePrevImg.jpg';
-import { getCourseById } from '../../api/course';
+import { getCourseById } from '@api/course';
 import ModuleChapters from './components/ModuleChapters';
 
 export const CourseDetails = () => {
@@ -24,8 +22,6 @@ export const CourseDetails = () => {
       <h1>Деталі курсу: {courseName}</h1>
       <List>
         {courseInfo?.modules.map(({ _id, name, chapters }) => {
-          console.log(chapters, 'chapters');
-
           return (
             <Item key={_id}>
               <img src={coursePrevImg} alt={name} />

@@ -54,11 +54,11 @@ export const getDetailsOfAllCourses = createAsyncThunk(
     },
 );
 
-export const getCourseByIdR = createAsyncThunk(
-    'course/getCourseById',
-    async (id: string, { rejectWithValue }) => {
+export const getCourseForAdmin = createAsyncThunk(
+    'course/getCourseForAdmin',
+    async (_, { rejectWithValue }) => {
         try {
-            const res = await axios.get(`/courses/${id}`);
+            const res = await axios.get('/courses/courses-details-admin');
 
             return res.data;
         } catch (error: any) {
@@ -67,3 +67,4 @@ export const getCourseByIdR = createAsyncThunk(
         }
     },
 );
+

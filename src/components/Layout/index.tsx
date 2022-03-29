@@ -25,6 +25,17 @@ const Main = styled.main`
   padding: 20px;
   background-color: white;
   border-radius: 20px;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background-color: ${theme.color.orange};
+    background-clip: padding-box;
+  }
 `;
 
 const Layout = () => {
