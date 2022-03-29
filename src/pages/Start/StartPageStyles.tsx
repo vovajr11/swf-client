@@ -27,7 +27,7 @@ export const PreviewContent = styled.div`
 
   > h1 {
     font: bold 48px/1.45 'Roboto', sans-serif;
-    color: white;
+    color: ${theme.color.gray};
   }
 
   > p {

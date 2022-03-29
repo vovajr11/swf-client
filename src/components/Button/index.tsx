@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-// import { theme } from '@theme/index';
+import { theme } from '@theme/index';
 import { sizes, variants } from './ButtonStyles';
 
 interface ButtonProps {
@@ -29,6 +29,10 @@ const StyledButton = styled(Button)`
   outline: none;
   min-width: 64px;
   border-radius: 4px;
+
+  > a {
+    color: ${theme.color.white};
+  }
 `;
 
 export default StyledButton;

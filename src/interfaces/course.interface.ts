@@ -12,7 +12,7 @@ interface IChapter {
 
 interface IItem {
     name: string;
-    desciption: string;
+    description: string;
     id: string;
     modules: IChapter[];
 }
@@ -21,4 +21,4 @@ interface ICourse {
     items: IItem[];
 }
 
-export { ICourse, IItem, IChapter }
+export { ICourse, IItem, IChapter, TChapter }

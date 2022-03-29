@@ -19,6 +19,8 @@ const StartPage = createChunk('Start');
 const HomePage = createChunk('Home');
 const NotFoundPage = createChunk('NotFound');
 const CreateCoursePage = createChunk('CreateCourse');
+const CoursesPage = createChunk('Courses');
+const CourseDetailsPage = createChunk('CourseDetails');
 
 const App = () => {
   const dispatch = useDispatch();
@@ -27,7 +29,7 @@ const App = () => {
     dispatch(getCurrentUser());
   });
 
-  useEffect(() => {});
+  // useEffect(() => {});
   return (
     <Suspense fallback={<h1>Loading</h1>}>
       <Global styles={GlobalStyle} />
@@ -48,6 +50,16 @@ const App = () => {
           <Route
             path="home"
             element={<ProtectedRoute children={<HomePage />} />}
+          />
+
+          <Route
+            path="courses"
+            element={<ProtectedRoute children={<CoursesPage />} />}
+          />
+
+          <Route
+            path="courses/:courseName/:courseId"
+            element={<ProtectedRoute children={<CourseDetailsPage />} />}
           />
 
           <Route

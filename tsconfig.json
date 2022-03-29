@@ -27,7 +27,8 @@
       "@types/*": ["src/@types/*"],
       "@interfaces/*": ["src/interfaces/*"],
       "@validations/*": ["src/validations/*"],
-      "@theme/*": ["src/theme/*"]
+      "@theme/*": ["src/theme/*"],
+      "@api/*": ["src/api/*"]
     }
   },
   "include": ["src"],
