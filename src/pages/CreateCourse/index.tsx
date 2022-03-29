@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import useToggle from '@hooks/useToggle';
-import {
-  getDetailsOfAllCourses,
-  createChapter,
-} from '@redux/courses/coursesAPI';
+import { getCourseForAdmin, createChapter } from '@redux/courses/coursesAPI';
 import Modal from '@components/Modal';
 import Button from '@components/Button';
 import TextEditor from '@components/TextEditor';
@@ -28,13 +25,11 @@ export const CreateCourse = () => {
   const [chapterName, setChapterName] = useState('');
 
   const onChangeChapterName = ({ target }: any) => {
-    console.log(target.value, 'target');
-
     setChapterName(target.value);
   };
 
   useEffect(() => {
-    dispatch(getDetailsOfAllCourses());
+    dispatch(getCourseForAdmin());
   }, []);
 
   return (

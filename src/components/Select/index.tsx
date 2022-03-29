@@ -6,7 +6,7 @@ interface ISelect {
 }
 
 const Select = ({ setCourseId }: ISelect) => {
-  const getAllCourses = useAppSelector(state => state.courses.items);
+  const getAllCourses = useAppSelector(state => state.courses.coursesForAdmin);
   const [selectedOption, setSelectedOption] = useState('');
 
   const selectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {

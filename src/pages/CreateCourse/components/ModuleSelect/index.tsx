@@ -7,9 +7,9 @@ interface IModuleSelector {
 }
 
 const ModuleSelect = ({ setModuleId }: IModuleSelector) => {
-  const getAllModules = useAppSelector(state => state.courses.items).flatMap(
-    ({ modules }) => modules,
-  );
+  const getAllModules = useAppSelector(
+    state => state.courses.coursesForAdmin,
+  ).flatMap(({ modules }) => modules);
 
   const [selectedOption, setSelectedOption] = useState('');
 
