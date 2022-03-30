@@ -45,3 +45,15 @@ export const Content = styled.div`
     text-align: right;
   }
 `;
+
+export const ButtonListForAdmin = styled.div`
+  margin: 15px 0;
+
+  > button {
+    margin-right: 30px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+`;

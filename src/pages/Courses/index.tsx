@@ -1,27 +1,57 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
-import { getDetailsOfAllCourses } from '@redux/courses/coursesAPI';
+import {
+  getDetailsOfAllCourses,
+  switchVisibilityCourse,
+} from '@redux/courses/coursesAPI';
 import { useAppSelector } from '@hooks/appHook';
 import useToggle from '@hooks/useToggle';
 import Button from '@components/Button';
 import Modal from '@components/Modal';
-import { CourseList, CourseItem, Content } from './CourseStyles';
 import coursePrevImg from '@assets/img/coursePrevImg.jpg';
+import {
+  CourseList,
+  CourseItem,
+  Content,
+  ButtonListForAdmin,
+} from './CourseStyles';
+
+interface ICourseInfo {
+  id: string;
+  name: string;
+  isVisible: boolean | undefined;
+}
 
 export const Courses = () => {
   const dispatch = useDispatch();
   const currentURL = useLocation().pathname;
-  const [courseId, setCourseId] = useState('');
+
+  const courses = useAppSelector(state => state.courses.coursesForStudents);
+  const isAdmin = useAppSelector(state => state.session.user.role) === 'admin';
+
+  const [courseInfo, setCourseInfo] = useState<ICourseInfo>({
+    id: '',
+    name: '',
+    isVisible: false,
+  });
 
   useEffect(() => {
     dispatch(getDetailsOfAllCourses());
   }, []);
 
-  const courses = useAppSelector(state => state.courses.coursesForStudents);
-  const isAdmin = useAppSelector(state => state.session.user.role) === 'admin';
-
   const [isShowCourseModal, toggleIsShowCourseModal] = useToggle(false);
+
+  const onSwitchVisibilityCourse = async () => {
+    dispatch(
+      switchVisibilityCourse({
+        id: courseInfo.id,
+        isVisible: !courseInfo.isVisible,
+      }),
+    );
+
+    toggleIsShowCourseModal();
+  };
 
   return (
     <>
@@ -62,12 +92,27 @@ export const Courses = () => {
                       )}
 
                       {isAdmin && (
-                        <Button
-                          size="md"
-                          onClick={() => toggleIsShowCourseModal()}
-                        >
-                          Відкрити курс
-                        </Button>
+                        <ButtonListForAdmin>
+                          <Button
+                            size="md"
+                            onClick={() => {
+                              toggleIsShowCourseModal();
+                              setCourseInfo({ id, name, isVisible });
+                            }}
+                          >
+                            {isVisible ? 'Закрити курс' : 'Відкрити курс'}
+                          </Button>
+
+                          <Button type="button">
+                            <Link
+                              to={{
+                                pathname: `${currentURL}/${name}/${id}`,
+                              }}
+                            >
+                              Деталі
+                            </Link>
+                          </Button>
+                        </ButtonListForAdmin>
                       )}
                     </Content>
                   </CourseItem>
@@ -81,7 +126,14 @@ export const Courses = () => {
       </CourseList>
 
       <Modal isShowing={isShowCourseModal} hide={toggleIsShowCourseModal}>
-        <h2>Toogle COurse Visible</h2>
+        <h2>
+          Ти хочеш {courseInfo.isVisible ? 'сховати' : 'відкрити курс'} курс
+          {': '}
+          {courseInfo.name}
+        </h2>
+        <Button size="md" onClick={onSwitchVisibilityCourse}>
+          Так
+        </Button>
       </Modal>
     </>
   );

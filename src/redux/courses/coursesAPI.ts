@@ -68,3 +68,29 @@ export const getCourseForAdmin = createAsyncThunk(
     },
 );
 
+interface ISwitchVisibilityCourse {
+    id: string;
+    isVisible: boolean | undefined;
+}
+
+export const switchVisibilityCourse = createAsyncThunk(
+    'course/switchVisibilityCourse',
+    async ({ id, isVisible }: ISwitchVisibilityCourse, { rejectWithValue, dispatch }) => {
+
+        try {
+            console.log(id, 'id');
+            console.log(isVisible, 'isVisible');
+
+            const res = await axios.patch(`/courses/switch-visibility-course/${id}`, { isVisible });
+            dispatch(getDetailsOfAllCourses())
+
+            return res.data;
+        } catch (error: any) {
+            console.log(error, 'err');
+
+            return rejectWithValue(error.response.data);
+        }
+    },
+);
+
+
