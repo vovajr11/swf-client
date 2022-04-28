@@ -13,21 +13,17 @@ import {
 } from './CourseInfoStyles';
 
 const CourseInfo = () => {
-  const courses = useAppSelector(state => state.courses.coursesForStudents);
+  const courses = useAppSelector(state => state.courses.coursesForAdmin);
 
   return (
     <ul>
-      {courses.length > 0 ? (
-        courses.map(({ id, name, modules }) => {
-          return (
-            <CourseItem name={name} key={id}>
-              <Modules modules={modules} />
-            </CourseItem>
-          );
-        })
-      ) : (
-        <p>Курсів нема</p>
-      )}
+      {courses.map(({ id, name, modules }) => {
+        return (
+          <CourseItem name={name} key={id}>
+            <Modules modules={modules} />
+          </CourseItem>
+        );
+      })}
     </ul>
   );
 };
@@ -60,22 +56,26 @@ interface IModule {
 const Modules = ({ modules }: IModule) => {
   return (
     <List>
-      {modules.map(({ _id, name, chapters }) => (
-        <ModuleItem name={name} key={_id}>
-          <List>
-            {chapters.length > 0 ? (
-              chapters.map(({ _id, name }) => (
-                <ItemFlex key={_id}>
-                  <ArticleIcon />
-                  <ChapterName>{name}</ChapterName>
-                </ItemFlex>
-              ))
-            ) : (
-              <p>Тем нема</p>
-            )}
-          </List>
-        </ModuleItem>
-      ))}
+      {modules.length > 0 ? (
+        modules.map(({ _id, name, chapters }) => (
+          <ModuleItem name={name} key={_id}>
+            <List>
+              {chapters.length > 0 ? (
+                chapters.map(({ _id, name }) => (
+                  <ItemFlex key={_id}>
+                    <ArticleIcon />
+                    <ChapterName>{name}</ChapterName>
+                  </ItemFlex>
+                ))
+              ) : (
+                <p>Тем нема</p>
+              )}
+            </List>
+          </ModuleItem>
+        ))
+      ) : (
+        <p>Нема модулів</p>
+      )}
     </List>
   );
 };

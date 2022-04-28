@@ -5,6 +5,7 @@ import { IItem } from '@interfaces/course.interface';
 import { List, Item, Content } from './CourseDetailsStyles';
 import { getCourseById } from '@api/course';
 import ModuleChapters from './components/ModuleChapters';
+import Quiz from './components/Quiz';
 
 export const CourseDetails = () => {
   const { courseName, courseId } = useParams();
@@ -39,6 +40,7 @@ export const CourseDetails = () => {
           );
         })}
       </List>
+      <Quiz />
     </>
   );
 };

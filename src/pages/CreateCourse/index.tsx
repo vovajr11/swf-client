@@ -8,6 +8,7 @@ import TextEditor from '@components/TextEditor';
 import Input from '@components/Input';
 import CreateCourseForm from './components/Forms/CreateCourseForm';
 import CreateModuleForm from './components/Forms/CreateModuleForm';
+import CreateQuizForm from './components/Forms/CreateQuizForms';
 import CourseInfo from './components/CoursesInfo';
 import ModuleSelect from './components/ModuleSelect';
 import {
@@ -21,6 +22,7 @@ export const CreateCourse = () => {
   const dispatch = useDispatch();
   const [isShowCourseModal, toggleIsShowCourseModal] = useToggle(false);
   const [isShowModuleModal, toggleIsShowModuleModal] = useToggle(false);
+  const [isShowQuizModal, toggleIsShowQuizModal] = useToggle(false);
   const [moduleId, setModuleId] = useState('');
   const [chapterName, setChapterName] = useState('');
 
@@ -42,6 +44,10 @@ export const CreateCourse = () => {
         <CreateModuleForm />
       </Modal>
 
+      <Modal isShowing={isShowQuizModal} hide={toggleIsShowQuizModal}>
+        <CreateQuizForm />
+      </Modal>
+
       <Wrapper>
         <EditorWrapper>
           <TextEditor
@@ -60,6 +66,10 @@ export const CreateCourse = () => {
             </Button>
             <Button size="md" onClick={() => toggleIsShowModuleModal()}>
               Добавити Модуль
+            </Button>
+
+            <Button size="md" onClick={() => toggleIsShowQuizModal()}>
+              Створити Квіз
             </Button>
 
             <ModuleSelect setModuleId={setModuleId} />
