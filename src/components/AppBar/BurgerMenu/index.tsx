@@ -3,6 +3,7 @@ import userRoutes from '../../../routes/user.json';
 import adminRoutes from '../../../routes/admin.json';
 import { useAppSelector } from '@hooks/appHook';
 import { getUserRole } from '@redux/auth/authSlice';
+import UserProfile from '../UserProfile';
 
 import { Burger, LinkList, LinkElem } from './BurgerMenuStyles';
 
@@ -18,6 +19,9 @@ const BurgerMenu = () => {
         <div />
         <div />
       </Burger>
+
+      {/* <UserProfile /> */}
+
       <LinkList open={isOpenBurger}>
         {userRoutes.map(route => (
           <li key={route.path}>

@@ -6,11 +6,11 @@ import Modal from '@components/Modal';
 import Button from '@components/Button';
 import TextEditor from '@components/TextEditor';
 import Input from '@components/Input';
+import ModuleSelect from '@components/ModuleSelect';
 import CreateCourseForm from './components/Forms/CreateCourseForm';
 import CreateModuleForm from './components/Forms/CreateModuleForm';
 import CreateQuizForm from './components/Forms/CreateQuizForms';
 import CourseInfo from './components/CoursesInfo';
-import ModuleSelect from './components/ModuleSelect';
 import {
   Wrapper,
   EditorWrapper,

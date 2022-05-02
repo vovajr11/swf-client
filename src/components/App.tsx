@@ -6,6 +6,7 @@ import { GlobalStyle } from '../theme';
 import { ProtectedRoute, AuthRoute, AdminRoute } from './ProtectedRoute';
 import { getCurrentUser } from '../redux/auth/authAPI';
 import Layout from './Layout';
+import Notification from '@components/Notification';
 
 const createChunk = (componentName: string) => {
   return lazy(() =>
@@ -22,6 +23,10 @@ const CreateCoursePage = createChunk('CreateCourse');
 const CoursesPage = createChunk('Courses');
 const CourseDetailsPage = createChunk('CourseDetails');
 const ChapterPage = createChunk('Chapter');
+const QuizzesPage = createChunk('Quizzes');
+const QuizToChooseTheCorrectAnswerPage = createChunk(
+  'QuizToChooseTheCorrectAnswer',
+);
 
 const App = () => {
   const dispatch = useDispatch();
@@ -30,10 +35,10 @@ const App = () => {
     dispatch(getCurrentUser());
   });
 
-  // useEffect(() => {});
   return (
     <Suspense fallback={<h1>Loading</h1>}>
       <Global styles={GlobalStyle} />
+      <Notification />
 
       <Routes>
         <Route path="*" element={<NotFoundPage />} />
@@ -61,6 +66,18 @@ const App = () => {
           <Route
             path="courses/:courseName/:courseId"
             element={<ProtectedRoute children={<CourseDetailsPage />} />}
+          />
+
+          <Route
+            path="courses/:courseName/:courseId/:moduleName/:moduleId/quizzes"
+            element={<ProtectedRoute children={<QuizzesPage />} />}
+          />
+
+          <Route
+            path="courses/:courseName/:courseId/:moduleName/:moduleId/quizzes/:quizName/:quizId"
+            element={
+              <ProtectedRoute children={<QuizToChooseTheCorrectAnswerPage />} />
+            }
           />
 
           <Route

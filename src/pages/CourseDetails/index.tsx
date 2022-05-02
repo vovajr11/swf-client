@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Box } from '@mui/material';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import coursePrevImg from '@assets/img/coursePrevImg.jpg';
 import { IItem } from '@interfaces/course.interface';
+import Button from '@components/Button';
 import { List, Item, Content } from './CourseDetailsStyles';
 import { getCourseById } from '@api/course';
 import ModuleChapters from './components/ModuleChapters';
-import Quiz from './components/Quiz';
 
 export const CourseDetails = () => {
+  const currentURL = useLocation().pathname;
   const { courseName, courseId } = useParams();
   const [courseInfo, setCourseInfo] = useState<IItem | undefined>();
 
@@ -28,7 +30,20 @@ export const CourseDetails = () => {
               <img src={coursePrevImg} alt={name} />
               <Content>
                 <h2>{name}</h2>
-                <ModuleChapters chapters={chapters} />
+                <Box sx={{ display: 'flex', gap: '20px', margin: '10px 0' }}>
+                  <ModuleChapters chapters={chapters} />
+
+                  <Button size="sm">
+                    <Link
+                      to={{
+                        pathname: `${currentURL}/${name}/${_id}/quizzes`,
+                      }}
+                    >
+                      Вікторини
+                    </Link>
+                  </Button>
+                </Box>
+
                 <p className="description">
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
                   Assumenda iure nemo quibusdam, perspiciatis animi autem, quo
@@ -40,7 +55,6 @@ export const CourseDetails = () => {
           );
         })}
       </List>
-      <Quiz />
     </>
   );
 };

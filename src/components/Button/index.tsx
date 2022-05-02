@@ -10,15 +10,27 @@ interface ButtonProps {
   size?: 'sm' | 'md' | 'lg';
   variant?: 'outlined' | 'contained';
   type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
 }
 
-const Button = ({ onClick, className, children, type }: ButtonProps) => (
-  <button onClick={onClick} className={className} type={type}>
+const Button = ({
+  onClick,
+  className,
+  children,
+  type,
+  disabled = false,
+}: ButtonProps) => (
+  <button
+    disabled={disabled}
+    onClick={onClick}
+    className={className}
+    type={type}
+  >
     {children}
   </button>
 );
 
-const StyledButton = styled(Button)`
+const StyledButton = styled(Button)<ButtonProps>`
   ${({ size = 'md' }) => sizes[size]};
   ${({ variant = 'contained' }) => variants[variant]};
 
@@ -29,6 +41,7 @@ const StyledButton = styled(Button)`
   outline: none;
   min-width: 64px;
   border-radius: 4px;
+  opacity: ${({ disabled }) => (disabled ? '0.8' : '1')};
 
   > a {
     color: ${theme.color.white};

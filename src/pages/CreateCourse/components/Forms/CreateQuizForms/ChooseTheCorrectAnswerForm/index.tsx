@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { List, arrayMove } from 'react-movable';
 import { v4 as uuidv4 } from 'uuid';
-import { useDispatch } from 'react-redux';
-import { Formik, ErrorMessage, FieldArray } from 'formik';
+import { Formik, FieldArray } from 'formik';
 import Input from '@components/Input';
 import Button from '@components/Button';
+import ModuleSelect from '@components/ModuleSelect';
+import { createQuiz } from '@api/quizzes/chooseTheCorrectAnswer';
+import { useInput } from '@hooks/useInput';
 import { Box } from '@mui/system';
 import { Answers } from './Styles';
 
@@ -28,25 +31,24 @@ const Form = () => {
     answer: '',
   };
 
-  const dispatch = useDispatch();
-
   const [answers, setAnswers] = useState(['']);
   const [data, setData] = useState<TData[]>([]);
+  const [moduleId, setModuleId] = useState('');
+
+  const question = useInput('', { isEmpty: true, minLength: 3 });
+  const correctAnswer = useInput('', { isEmpty: true, minLength: 3 });
 
   return (
     <Formik
       initialValues={initialValues}
       onSubmit={({ quizName }) => {
-        console.log(
-          {
-            name: quizName,
-            data,
-          },
-          'values',
-        );
-        // dispatch(createCourse(values));
+        createQuiz({
+          moduleId,
+          name: quizName,
+          quizType: 'chooseTheCorrectAnswer',
+          data,
+        });
       }}
-      // validationSchema={validation}
     >
       {({ values, handleSubmit, handleChange, resetForm }) => (
         <form onSubmit={handleSubmit}>
@@ -60,7 +62,14 @@ const Form = () => {
                     width: '50%',
                   }}
                 >
-                  <Box sx={{ marginBottom: '20px' }}>
+                  <Box
+                    sx={{
+                      marginBottom: '20px',
+                      display: 'flex',
+                      gap: '10px',
+                      alignItems: 'center',
+                    }}
+                  >
                     <Input
                       type="text"
                       name="quizName"
@@ -68,7 +77,8 @@ const Form = () => {
                       value={values.quizName}
                       onChange={handleChange}
                     />
-                    <ErrorMessage name="quizName" />
+
+                    <ModuleSelect setModuleId={setModuleId} />
                   </Box>
 
                   <Input
@@ -76,18 +86,22 @@ const Form = () => {
                     name="question"
                     placeholder="Питання"
                     value={values.question}
-                    onChange={handleChange}
+                    onChange={e => {
+                      handleChange(e);
+                      question.onChange(e);
+                    }}
                   />
-                  <ErrorMessage name="question" />
 
                   <Input
                     type="text"
                     name="correctAnswer"
                     placeholder="Правильна відповідь"
                     value={values.correctAnswer}
-                    onChange={handleChange}
+                    onChange={e => {
+                      handleChange(e);
+                      correctAnswer.onChange(e);
+                    }}
                   />
-                  <ErrorMessage name="correctAnswer" />
 
                   <Answers>
                     {answers.length > 1 ? (
@@ -104,7 +118,7 @@ const Form = () => {
                   </Answers>
 
                   <Box
-                    sx={{ display: 'flex', gap: '10px', marginBottom: '50px' }}
+                    sx={{ display: 'flex', gap: '10px', marginBottom: '30px' }}
                   >
                     <Button
                       type="button"
@@ -130,6 +144,11 @@ const Form = () => {
                   <Button
                     type="button"
                     size="sm"
+                    disabled={
+                      question.minLengthError ||
+                      correctAnswer.minLengthError ||
+                      answers.length === 1
+                    }
                     onClick={() => {
                       setData(prevState => {
                         return [
@@ -141,34 +160,40 @@ const Form = () => {
                           },
                         ];
                       });
+                      setAnswers(['']);
                       resetForm();
                     }}
                   >
                     Додати питання
                   </Button>
                 </Box>
-                <ul>
-                  {data.map(({ question, correctAnswer, answers }) => {
-                    return (
-                      <li key={uuidv4()}>
-                        <p>Питання: {question}</p>
-                        <p>Вірна відповідь: {correctAnswer}</p>
+                <List
+                  values={data}
+                  onChange={({ oldIndex, newIndex }) =>
+                    setData(arrayMove(data, oldIndex, newIndex))
+                  }
+                  renderList={({ children, props }) => (
+                    <ul {...props}>{children}</ul>
+                  )}
+                  renderItem={({ value, props }) => (
+                    <li {...props}>
+                      <p>Питання: {value.question}</p>
+                      <p>Вірна відповідь: {value.correctAnswer}</p>
 
-                        <ul>
-                          {answers.map(answer => (
-                            <li key={uuidv4()}>{answer}</li>
-                          ))}
-                        </ul>
-                      </li>
-                    );
-                  })}
-                </ul>
+                      <ul>
+                        {value.answers.map(answer => (
+                          <li key={uuidv4()}>{answer}</li>
+                        ))}
+                      </ul>
+                    </li>
+                  )}
+                />
               </Box>
             )}
           </FieldArray>
 
           <Box sx={{ textAlign: 'center' }}>
-            <Button type="submit" variant="contained" size="md">
+            <Button type="submit" variant="contained" size="lg">
               Створити квіз
             </Button>
           </Box>

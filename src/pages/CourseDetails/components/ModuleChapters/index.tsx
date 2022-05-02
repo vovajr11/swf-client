@@ -22,34 +22,37 @@ const ModuleChapters = ({ chapters }: IChapter) => {
   };
 
   return (
-    <Box margin="10px 0;">
+    <>
       <Button size="sm" onClick={handleClick}>
-        Вибери тему
+        {chapters.length > 0 ? 'Вибери тему' : 'Тем нема'}
       </Button>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
-      >
-        {chapters.map(({ name, _id }) => {
-          return (
-            <MenuItem key={_id} onClick={handleClose}>
-              <Link
-                to={{
-                  pathname: `${currentURL}/${name}/${_id}`,
-                }}
-              >
-                {name}
-              </Link>
-            </MenuItem>
-          );
-        })}
-      </Menu>
-    </Box>
+
+      {chapters.length > 0 && (
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            'aria-labelledby': 'basic-button',
+          }}
+        >
+          {chapters.map(({ name, _id }) => {
+            return (
+              <MenuItem key={_id} onClick={handleClose}>
+                <Link
+                  to={{
+                    pathname: `${currentURL}/${name}/${_id}`,
+                  }}
+                >
+                  {name}
+                </Link>
+              </MenuItem>
+            );
+          })}
+        </Menu>
+      )}
+    </>
   );
 };
 

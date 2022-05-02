@@ -1,3 +1,6 @@
+import { Box } from '@mui/material';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
+import LockIcon from '@mui/icons-material/Lock';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
@@ -29,6 +32,8 @@ export const Courses = () => {
 
   const courses = useAppSelector(state => state.courses.coursesForStudents);
   const isAdmin = useAppSelector(state => state.session.user.role) === 'admin';
+  const isStudent =
+    useAppSelector(state => state.session.user.role) === 'student';
 
   const [courseInfo, setCourseInfo] = useState<ICourseInfo>({
     id: '',
@@ -65,7 +70,22 @@ export const Courses = () => {
                   <CourseItem key={id}>
                     <img src={coursePrevImg} alt={name} />
                     <Content>
-                      <h2>{name}</h2>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                        }}
+                      >
+                        <h2>{name}</h2>
+
+                        {isVisible ? (
+                          <LockOpenIcon color="success" />
+                        ) : (
+                          <LockIcon color="error" />
+                        )}
+                      </Box>
+
                       <p className="number-of-modules">
                         Кількість модулів: <span>{numberOfModules}</span>
                       </p>
@@ -76,20 +96,6 @@ export const Courses = () => {
                         error accusamus cupiditate? Asperiores quis optio quod
                         rerum.
                       </p>
-
-                      {isVisible ? (
-                        <Button type="button">
-                          <Link
-                            to={{
-                              pathname: `${currentURL}/${name}/${id}`,
-                            }}
-                          >
-                            Деталі
-                          </Link>
-                        </Button>
-                      ) : (
-                        <p style={{ color: 'red' }}>Курс закритий</p>
-                      )}
 
                       {isAdmin && (
                         <ButtonListForAdmin>
@@ -113,6 +119,18 @@ export const Courses = () => {
                             </Link>
                           </Button>
                         </ButtonListForAdmin>
+                      )}
+
+                      {isStudent && isVisible && (
+                        <Button type="button">
+                          <Link
+                            to={{
+                              pathname: `${currentURL}/${name}/${id}`,
+                            }}
+                          >
+                            Деталі
+                          </Link>
+                        </Button>
                       )}
                     </Content>
                   </CourseItem>

@@ -57,22 +57,26 @@ const Modules = ({ modules }: IModule) => {
   return (
     <List>
       {modules.length > 0 ? (
-        modules.map(({ _id, name, chapters }) => (
-          <ModuleItem name={name} key={_id}>
-            <List>
-              {chapters.length > 0 ? (
-                chapters.map(({ _id, name }) => (
-                  <ItemFlex key={_id}>
-                    <ArticleIcon />
-                    <ChapterName>{name}</ChapterName>
-                  </ItemFlex>
-                ))
-              ) : (
-                <p>Тем нема</p>
-              )}
-            </List>
-          </ModuleItem>
-        ))
+        modules.map(({ _id, name, chapters = [] }) => {
+          console.log(chapters, 'chapters');
+
+          return (
+            <ModuleItem name={name} key={_id}>
+              <List>
+                {chapters.length > 0 ? (
+                  chapters.map(({ _id, name }) => (
+                    <ItemFlex key={_id}>
+                      <ArticleIcon />
+                      <ChapterName>{name}</ChapterName>
+                    </ItemFlex>
+                  ))
+                ) : (
+                  <p>Тем нема</p>
+                )}
+              </List>
+            </ModuleItem>
+          );
+        })
       ) : (
         <p>Нема модулів</p>
       )}
