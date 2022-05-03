@@ -6,12 +6,16 @@ import Button from '@components/Button';
 import validation from '@validations/createCourseForm';
 import { Form } from './FormStyles';
 
+interface IProps {
+  closeTheForm: () => void;
+}
+
 interface IForm {
   name: string;
   description: string;
 }
 
-const CreateCourseForm = () => {
+const CreateCourseForm = ({ closeTheForm }: IProps) => {
   const initialValues: IForm = { name: '', description: '' };
   const dispatch = useDispatch();
   return (
@@ -19,6 +23,7 @@ const CreateCourseForm = () => {
       initialValues={initialValues}
       onSubmit={values => {
         dispatch(createCourse(values));
+        closeTheForm();
       }}
       validationSchema={validation}
     >

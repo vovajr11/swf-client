@@ -8,12 +8,16 @@ import Select from '@components/Select';
 import validation from '@validations/сreateModuleForm';
 import { Form } from './FormStyles';
 
+interface IProps {
+  closeTheForm: () => void;
+}
+
 interface IForm {
   name: string;
   description: string;
 }
 
-const CreateModuleForm = () => {
+const CreateModuleForm = ({ closeTheForm }: IProps) => {
   const initialValues: IForm = { name: '', description: '' };
   const dispatch = useDispatch();
   const [courseId, setCourseId] = useState('');
@@ -23,6 +27,7 @@ const CreateModuleForm = () => {
       initialValues={initialValues}
       onSubmit={values => {
         dispatch(createModule({ ...values, courseId }));
+        closeTheForm();
       }}
       validationSchema={validation}
     >
@@ -50,7 +55,7 @@ const CreateModuleForm = () => {
             <ErrorMessage name="description" />
 
             <Button type="submit" variant="contained" size="sm">
-              Ввійти
+              Додати
             </Button>
           </Form>
         </>

@@ -35,7 +35,7 @@ export const createChapter = createAsyncThunk(
 
       return { moduleId: credentials.moduleId, resData: res.data.chapter };
     } catch (error: any) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error.response.data.message);
     }
   },
 );

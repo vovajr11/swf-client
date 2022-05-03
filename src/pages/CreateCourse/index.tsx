@@ -37,11 +37,11 @@ export const CreateCourse = () => {
   return (
     <>
       <Modal isShowing={isShowCourseModal} hide={toggleIsShowCourseModal}>
-        <CreateCourseForm />
+        <CreateCourseForm closeTheForm={toggleIsShowCourseModal} />
       </Modal>
 
       <Modal isShowing={isShowModuleModal} hide={toggleIsShowModuleModal}>
-        <CreateModuleForm />
+        <CreateModuleForm closeTheForm={toggleIsShowModuleModal} />
       </Modal>
 
       <Modal isShowing={isShowQuizModal} hide={toggleIsShowQuizModal}>
