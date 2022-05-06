@@ -1,12 +1,12 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-import ChooseTheCorrectAnswerForm from './ChooseTheCorrectAnswerForm';
+import ChooseTheCorrectAnswerForm from '../ChooseTheCorrectAnswerForm';
 import {
   TabWrapper,
   TabList,
   StyledTab,
   StyledTabPanel,
-} from './CreateQuizFormStyles';
+} from './CreateQuizzesModal.styles';
 
 interface TabPanelProps {
   children?: React.ReactNode;

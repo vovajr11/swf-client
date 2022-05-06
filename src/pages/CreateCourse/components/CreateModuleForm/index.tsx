@@ -6,7 +6,7 @@ import Input from '@components/Input';
 import Button from '@components/Button';
 import Select from '@components/Select';
 import validation from '@validations/сreateModuleForm';
-import { Form } from './FormStyles';
+import { Form } from '../Form.styles';
 
 interface IProps {
   closeTheForm: () => void;

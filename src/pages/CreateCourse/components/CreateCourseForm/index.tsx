@@ -4,7 +4,7 @@ import { createCourse } from '@redux/courses/coursesAPI';
 import Input from '@components/Input';
 import Button from '@components/Button';
 import validation from '@validations/createCourseForm';
-import { Form } from './FormStyles';
+import { Form } from '../Form.styles';
 
 interface IProps {
   closeTheForm: () => void;

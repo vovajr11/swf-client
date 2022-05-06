@@ -7,22 +7,21 @@ import Button from '@components/Button';
 import TextEditor from '@components/TextEditor';
 import Input from '@components/Input';
 import ModuleSelect from '@components/ModuleSelect';
-import CreateCourseForm from './components/Forms/CreateCourseForm';
-import CreateModuleForm from './components/Forms/CreateModuleForm';
-import CreateQuizForm from './components/Forms/CreateQuizForms';
+import CreateCourseForm from './components/CreateCourseForm';
+import CreateModuleForm from './components/CreateModuleForm';
+import CreateQuizzesModal from './components/CreateQuizzesModal';
 import CourseInfo from './components/CoursesInfo';
 import {
   Wrapper,
   EditorWrapper,
   CourseInfoWrapper,
   ButtonList,
-} from './CreateCourseStyles';
+} from './CreateCourse.styles';
 
 export const CreateCourse = () => {
   const dispatch = useDispatch();
   const [isShowCourseModal, toggleIsShowCourseModal] = useToggle(false);
   const [isShowModuleModal, toggleIsShowModuleModal] = useToggle(false);
-  const [isShowQuizModal, toggleIsShowQuizModal] = useToggle(false);
   const [moduleId, setModuleId] = useState('');
   const [chapterName, setChapterName] = useState('');
 
@@ -42,10 +41,6 @@ export const CreateCourse = () => {
 
       <Modal isShowing={isShowModuleModal} hide={toggleIsShowModuleModal}>
         <CreateModuleForm closeTheForm={toggleIsShowModuleModal} />
-      </Modal>
-
-      <Modal isShowing={isShowQuizModal} hide={toggleIsShowQuizModal}>
-        <CreateQuizForm />
       </Modal>
 
       <Wrapper>
@@ -68,10 +63,6 @@ export const CreateCourse = () => {
               Добавити Модуль
             </Button>
 
-            <Button size="md" onClick={() => toggleIsShowQuizModal()}>
-              Створити Квіз
-            </Button>
-
             <ModuleSelect setModuleId={setModuleId} />
             <Input
               type="text"
@@ -84,6 +75,10 @@ export const CreateCourse = () => {
           <CourseInfo />
         </CourseInfoWrapper>
       </Wrapper>
+
+      <h2>Створення тестів</h2>
+
+      <CreateQuizzesModal />
     </>
   );
 };

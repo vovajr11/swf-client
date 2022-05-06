@@ -1,5 +1,5 @@
+import { Box } from '@mui/system';
 import { useState } from 'react';
-import { List, arrayMove } from 'react-movable';
 import { v4 as uuidv4 } from 'uuid';
 import { Formik, FieldArray } from 'formik';
 import Input from '@components/Input';
@@ -7,10 +7,11 @@ import Button from '@components/Button';
 import ModuleSelect from '@components/ModuleSelect';
 import { createQuiz } from '@api/quizzes/chooseTheCorrectAnswer';
 import { useInput } from '@hooks/useInput';
-import { Box } from '@mui/system';
-import { Answers } from './Styles';
+import { Answers } from './ChooseTheCorrectAnswerForm.styles';
+import QuestionList from './QuestionList';
 
 type TData = {
+  id: string;
   question: string;
   correctAnswer: string;
   answers: string[];
@@ -34,6 +35,7 @@ const Form = () => {
   const [answers, setAnswers] = useState(['']);
   const [data, setData] = useState<TData[]>([]);
   const [moduleId, setModuleId] = useState('');
+  // const [dataForDrag, updateDataForDrag] = useState(data);
 
   const question = useInput('', { isEmpty: true, minLength: 3 });
   const correctAnswer = useInput('', { isEmpty: true, minLength: 3 });
@@ -154,6 +156,7 @@ const Form = () => {
                         return [
                           ...prevState,
                           {
+                            id: uuidv4(),
                             question: values.question,
                             correctAnswer: values.correctAnswer,
                             answers: answers.slice(1),
@@ -167,27 +170,9 @@ const Form = () => {
                     Додати питання
                   </Button>
                 </Box>
-                <List
-                  values={data}
-                  onChange={({ oldIndex, newIndex }) =>
-                    setData(arrayMove(data, oldIndex, newIndex))
-                  }
-                  renderList={({ children, props }) => (
-                    <ul {...props}>{children}</ul>
-                  )}
-                  renderItem={({ value, props }) => (
-                    <li {...props}>
-                      <p>Питання: {value.question}</p>
-                      <p>Вірна відповідь: {value.correctAnswer}</p>
-
-                      <ul>
-                        {value.answers.map(answer => (
-                          <li key={uuidv4()}>{answer}</li>
-                        ))}
-                      </ul>
-                    </li>
-                  )}
-                />
+                {data.length > 0 && (
+                  <QuestionList questions={data} updateData={setData} />
+                )}
               </Box>
             )}
           </FieldArray>
