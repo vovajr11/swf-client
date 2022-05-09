@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import Button from '@components/Button';
 import WordCard from './components/WordCard';
+import UserAnswers from './components/UserAnswers';
+import useNextCard from './logic/useNextCard';
+import onDragEnd from './logic/onDragEnd';
 import {
   Background,
   WordList,
   WordColumnStyles,
   Title,
+  Question,
+  BtnContainer,
 } from './QuizPuzzle.styles';
-import useNextCard from './components/NextCard';
 
 type TWord = {
   id: string;
@@ -20,61 +26,24 @@ export const QuizPuzzle = () => {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(true);
   const [showQuiz, setShowQuiz] = useState(false);
+  const [userAnswers, setUserAnswers] = useState(['']);
 
-  console.log(columns, 'columns');
+  const totalQuestion = columnsFromBackend.answers.totalQuestion - 1;
+  const isActiveBtnNext =
+    columns.answers.numberOfWords === columns.userAnswers.items.length;
 
   useEffect(() => {
     setColumns(columnsFromBackend);
     setGameOver(false);
   }, [questionNumber]);
 
-  const onDragEnd = (result: any, columns: any, setColumns: any) => {
-    if (!result.destination) return;
-
-    const { source, destination } = result;
-
-    if (source.droppableId !== destination.droppableId) {
-      const sourceColumn = columns[source.droppableId];
-      const destColumn = columns[destination.droppableId];
-
-      const sourceItems = [...sourceColumn.items];
-      const destItems = [...destColumn.items];
-      const [removed] = sourceItems.splice(source.index, 1);
-
-      destItems.splice(destination.index, 0, removed);
-
-      setColumns({
-        ...columns,
-        [source.droppableId]: {
-          ...sourceColumn,
-          items: sourceItems,
-        },
-        [destination.droppableId]: {
-          ...destColumn,
-          items: destItems,
-        },
-      });
-    } else {
-      const column = columns[source.droppableId];
-      const copiedItems = [...column.items];
-      const [removed] = copiedItems.splice(source.index, 1);
-      copiedItems.splice(destination.index, 0, removed);
-      setColumns({
-        ...columns,
-        [source.droppableId]: {
-          ...column,
-          items: copiedItems,
-        },
-      });
-    }
-  };
-
-  const totalQuestion = 1;
-
   const nexQuestion = () => {
     const { answers, userAnswers } = columns;
-
     const userAnswer = createStringFromArr(userAnswers.items);
+
+    setUserAnswers(prevState => {
+      return [...prevState, userAnswer];
+    });
 
     if (answers.correctAnswer === userAnswer) {
       setScore(prevState => prevState + 1);
@@ -99,35 +68,31 @@ export const QuizPuzzle = () => {
           <DragDropContext
             onDragEnd={result => onDragEnd(result, columns, setColumns)}
           >
+            <Question>{columns.answers.question}</Question>
+
             <WordColumnStyles>
-              {Object.entries(columns).map(([columnId, column], index) => {
+              {Object.entries(columns).map(([columnId, column]) => {
                 return (
                   <Droppable
                     direction="horizontal"
-                    key={columnId}
                     droppableId={columnId}
+                    key={columnId}
                   >
                     {(provided, snapshot) => (
                       <Background
-                        ref={provided.innerRef}
                         {...provided.droppableProps}
+                        ref={provided.innerRef}
                       >
                         <Title>{column.title}</Title>
 
                         <WordList>
-                          {column.items.length > 0 ? (
-                            <>
-                              {column.items.map((item, index) => (
-                                <WordCard
-                                  key={item.id}
-                                  item={item}
-                                  index={index}
-                                />
-                              ))}
-                            </>
-                          ) : (
-                            <p>Перетягніть слова</p>
-                          )}
+                          {column.items.map((item, index) => (
+                            <WordCard
+                              key={uuidv4()}
+                              item={item}
+                              index={index}
+                            />
+                          ))}
                         </WordList>
                       </Background>
                     )}
@@ -137,12 +102,22 @@ export const QuizPuzzle = () => {
             </WordColumnStyles>
           </DragDropContext>
 
-          <button onClick={nexQuestion}>
-            {totalQuestion === questionNumber ? 'Finish' : 'Next'}
-          </button>
+          <BtnContainer>
+            <Button
+              type="button"
+              size="lg"
+              disabled={!isActiveBtnNext}
+              onClick={nexQuestion}
+            >
+              {totalQuestion === questionNumber ? 'Завершити' : 'Далі'}
+            </Button>
+          </BtnContainer>
         </>
       )}
-      {showQuiz && <h2>Ти набрав: {score} балів</h2>}
+
+      {showQuiz && (
+        <UserAnswers userAnswers={userAnswers.slice(1)} score={score} />
+      )}
     </>
   );
 };

@@ -32,3 +32,13 @@ export const Title = styled.span`
   border-radius: 5px;
   align-self: flex-start;
 `;
+
+export const Question = styled.p`
+  font-size: 40px;
+  margin-bottom: 20px;
+`;
+
+export const BtnContainer = styled.div`
+  text-align: center;
+  margin-top: 20px;
+`;
