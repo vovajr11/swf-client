@@ -30,30 +30,22 @@ const QuestionList = ({ questions, updateData }: IProps) => {
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
-              {questions.map(
-                ({ question, correctAnswer, words, id }, index) => {
-                  return (
-                    <Draggable key={id} draggableId={id} index={index}>
-                      {provided => (
-                        <li
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                        >
-                          <p>Питання: {question}</p>
-                          <p>Вірна відповідь: {correctAnswer}</p>
-
-                          <ul>
-                            {words.map(word => (
-                              <li key={uuidv4()}>{word}</li>
-                            ))}
-                          </ul>
-                        </li>
-                      )}
-                    </Draggable>
-                  );
-                },
-              )}
+              {questions.map(({ question, correctAnswer, id }, index) => {
+                return (
+                  <Draggable key={id} draggableId={id} index={index}>
+                    {provided => (
+                      <li
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                      >
+                        <p>Питання: {question}</p>
+                        <p>Вірна відповідь: {correctAnswer}</p>
+                      </li>
+                    )}
+                  </Draggable>
+                );
+              })}
               {provided.placeholder}
             </ul>
           )}

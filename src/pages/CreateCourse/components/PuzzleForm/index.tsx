@@ -16,18 +16,28 @@ const Form = () => {
     quizName: '',
     question: '',
     correctAnswer: '',
-    word: '',
   };
 
-  const [words, setWords] = useState<TWord[]>([]);
   const [questions, setQuestions] = useState<IQuestion[]>([]);
   const [moduleId, setModuleId] = useState('');
   const inputQuestion = useInput('', { isEmpty: true, minLength: 3 });
   const inputCorrectAnswer = useInput('', { isEmpty: true, minLength: 3 });
 
+  function validateTest(value: string) {
+    let error;
+
+    if (!value) {
+      error = 'Required';
+    } else if (/^[a-zA-Z\s]*$/.test(value)) {
+      error = 'Invalid email address';
+    }
+    return error;
+  }
+
   return (
     <>
       <h2>Вікторина "Пазли"</h2>
+
       <Formik
         initialValues={initialValues}
         onSubmit={({ quizName }) => {
@@ -94,75 +104,30 @@ const Form = () => {
                       }}
                     />
 
-                    <Answers>
-                      {words.length > 1 ? (
-                        <ul>
-                          {words.slice(1).map(word => (
-                            <li key={uuidv4()}>
-                              <p>{word}</p>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <p>Додай слова</p>
-                      )}
-                    </Answers>
-
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        gap: '10px',
-                        marginBottom: '30px',
-                      }}
-                    >
-                      <Button
-                        type="button"
-                        size="sm"
-                        onClick={() =>
-                          setWords(prevState => {
-                            return [
-                              ...prevState,
-                              {
-                                id: uuidv4(),
-                                word: values.word,
-                              },
-                            ];
-                          })
-                        }
-                      >
-                        Додати слово
-                      </Button>
-
-                      <Input
-                        type="text"
-                        name="answer"
-                        placeholder="Слово"
-                        value={values.word}
-                        onChange={handleChange}
-                      />
-                    </Box>
-
                     <Button
                       type="button"
                       size="sm"
                       disabled={
                         inputQuestion.minLengthError ||
-                        inputCorrectAnswer.minLengthError ||
-                        words.length === 1
+                        inputCorrectAnswer.minLengthError
                       }
                       onClick={() => {
                         setQuestions(prevState => {
+                          console.log(
+                            validateTest(values.correctAnswer),
+                            'sss',
+                          );
+
                           return [
                             ...prevState,
                             {
                               id: uuidv4(),
                               question: values.question,
                               correctAnswer: values.correctAnswer,
-                              words: words.slice(1),
                             },
                           ];
                         });
-                        setWords([]);
+
                         resetForm();
                       }}
                     >

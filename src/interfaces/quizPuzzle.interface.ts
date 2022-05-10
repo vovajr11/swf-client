@@ -7,7 +7,6 @@ export interface IQuestion {
   id: string;
   question: string;
   correctAnswer: string;
-  words: TWord[];
 }
 
 export interface ICreateQuiz {
@@ -21,5 +20,4 @@ export interface IForm {
   quizName: string;
   question: string;
   correctAnswer: string;
-  word: string;
 }

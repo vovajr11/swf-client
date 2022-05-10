@@ -27,8 +27,8 @@ const QuizzesPage = createChunk('Quizzes');
 const QuizToChooseTheCorrectAnswerPage = createChunk(
   'QuizToChooseTheCorrectAnswer',
 );
-const QuizPuzzlePage = createChunk('QuizPuzzle');
-;
+// const QuizPuzzlePage = createChunk('QuizPuzzle');
+const QuizTranslateSentencesPage = createChunk('QuizTranslateSentences');
 
 const App = () => {
   const dispatch = useDispatch();
@@ -67,7 +67,7 @@ const App = () => {
 
           <Route
             path="test"
-            element={<ProtectedRoute children={<QuizPuzzlePage />} />}
+            element={<ProtectedRoute children={<QuizTranslateSentencesPage />} />}
           />
 
           <Route
