@@ -1,9 +1,6 @@
 import axios from 'axios';
 import notificationTypes from '@components/Notification/notificationTypes';
-import {
-  IQuizzes,
-  TQuiz,
-} from '@interfaces/quizToChooseTheCorrectAnswer.interface';
+import { IQuizzes } from '@interfaces/quizzes.interface';
 
 export const getQuizzes = async () => {
   try {
@@ -22,16 +19,6 @@ export const getQuizzesByModuleId = async (id: string | undefined) => {
     );
 
     return data.quizzes;
-  } catch (error: any) {
-    notificationTypes.notificationWarn(error.response.data.message);
-  }
-};
-
-export const getQuizById = async (id: string | undefined) => {
-  try {
-    const { data } = await axios.get<TQuiz>(`/quizzes/get-quiz-by-id/${id}`);
-
-    return data;
   } catch (error: any) {
     notificationTypes.notificationWarn(error.response.data.message);
   }

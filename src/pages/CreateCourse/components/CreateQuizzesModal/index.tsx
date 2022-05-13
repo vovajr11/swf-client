@@ -2,6 +2,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import ChooseTheCorrectAnswerForm from '../ChooseTheCorrectAnswerForm';
 import PuzzleForm from '../PuzzleForm';
+import TranslateSentencesForm from '../TranslateSentencesForm';
 import {
   TabWrapper,
   TabList,
@@ -51,7 +52,7 @@ const CreateQuizForm = () => {
         <TabList value={value} onChange={handleChange}>
           <StyledTab label="Вибрати вірну відповідь" {...a11yProps(0)} />
           <StyledTab label="Пазли" {...a11yProps(1)} />
-          <StyledTab label="Item Three" {...a11yProps(2)} />
+          <StyledTab label="Переклад речення" {...a11yProps(2)} />
         </TabList>
       </Box>
       <TabPanel value={value} index={0}>
@@ -61,7 +62,7 @@ const CreateQuizForm = () => {
         <PuzzleForm />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+        <TranslateSentencesForm />
       </TabPanel>
     </TabWrapper>
   );

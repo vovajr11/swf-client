@@ -65,10 +65,12 @@ const App = () => {
             element={<ProtectedRoute children={<CoursesPage />} />}
           />
 
-          <Route
+          {/* <Route
             path="test"
-            element={<ProtectedRoute children={<QuizTranslateSentencesPage />} />}
-          />
+            element={
+              <ProtectedRoute children={<QuizTranslateSentencesPage />} />
+            }
+          /> */}
 
           <Route
             path="courses/:courseName/:courseId"
@@ -81,9 +83,16 @@ const App = () => {
           />
 
           <Route
-            path="courses/:courseName/:courseId/:moduleName/:moduleId/quizzes/:quizName/:quizId"
+            path="courses/:courseName/:courseId/:moduleName/:moduleId/quizzes/toChooseTheCorrectAnswer/:quizName/:quizId"
             element={
               <ProtectedRoute children={<QuizToChooseTheCorrectAnswerPage />} />
+            }
+          />
+
+          <Route
+            path="courses/:courseName/:courseId/:moduleName/:moduleId/quizzes/translateSentences/:quizName/:quizId"
+            element={
+              <ProtectedRoute children={<QuizTranslateSentencesPage />} />
             }
           />
 

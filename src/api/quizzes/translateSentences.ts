@@ -1,33 +1,25 @@
 import axios from 'axios';
 import notificationTypes from '@components/Notification/notificationTypes';
-import { IQuestion } from '@interfaces/quizToChooseTheCorrectAnswer.interface';
-
-type TData = {
-  question: string;
-  correctAnswer: string;
-  answers: string[];
-};
+import { IQuestion } from '@interfaces/quizTranslateSentences.interface';
 
 interface ICreateQuiz {
   moduleId: string;
   name: string;
   quizType: string;
-  questions: TData[];
+  data: IQuestion[];
 }
 
 interface IGetQuiz {
-  data: {
-    questions: IQuestion[];
-  };
+  questions: IQuestion[];
 }
 
 export const getQuizById = async (id: string | undefined) => {
   try {
     const { data } = await axios.get<IGetQuiz>(
-      `/quizzes/get-quiz-choose-the-correct-answer-by-id/${id}`,
+      `/quizzes/get-quiz-translate-sentences-by-id/${id}`,
     );
 
-    return data.data.questions;
+    return data.questions;
   } catch (error: any) {
     notificationTypes.notificationWarn(error.response.data.message);
   }
@@ -35,7 +27,7 @@ export const getQuizById = async (id: string | undefined) => {
 
 export const createQuiz = async (data: ICreateQuiz) => {
   try {
-    await axios.post('/quizzes/add-quiz-choose-the-correct-answer', data);
+    await axios.post('/quizzes/add-quiz-translate-sentences', data);
     notificationTypes.notificationSuccess('Квіз додано!');
   } catch (error: any) {
     notificationTypes.notificationWarn(error.response.data.message);

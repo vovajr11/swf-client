@@ -58,8 +58,6 @@ const Modules = ({ modules }: IModule) => {
     <List>
       {modules.length > 0 ? (
         modules.map(({ _id, name, chapters = [] }) => {
-          console.log(chapters, 'chapters');
-
           return (
             <ModuleItem name={name} key={_id}>
               <List>

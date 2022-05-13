@@ -1,28 +1,27 @@
 type TChapter = {
-    _id: string;
-    name: string;
-    contetnt: string;
-}
+  _id: string;
+  name: string;
+  contetnt: string;
+};
 
 interface IChapter {
-    _id: string;
-    name: string;
-    chapters: TChapter[];
+  _id: string;
+  name: string;
+  chapters: TChapter[];
 }
 
 interface IItem {
-    name: string;
-    description: string;
-    id: string;
-    isVisible?: boolean;
-    numberOfModules?: number;
-    modules: IChapter[];
+  name: string;
+  description: string;
+  id: string;
+  isVisible?: boolean;
+  numberOfModules?: number;
+  modules: IChapter[];
 }
 
 interface ICourse {
-    coursesForAdmin: IItem[];
-    coursesForStudents: IItem[];
-
+  coursesForAdmin: IItem[];
+  coursesForStudents: IItem[];
 }
 
-export { ICourse, IItem, IChapter, TChapter }
+export { ICourse, IItem, IChapter, TChapter };

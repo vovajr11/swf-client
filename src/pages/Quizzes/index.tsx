@@ -1,13 +1,24 @@
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import GTranslateIcon from '@mui/icons-material/GTranslate';
+import ExtensionIcon from '@mui/icons-material/Extension';
 import { useEffect, useState } from 'react';
 import { Link, useParams, useLocation } from 'react-router-dom';
+import Button from '@components/Button';
 import { getQuizzesByModuleId } from '@api/quizzes/getQuizzes';
-import { TQuiz } from '@interfaces/quizToChooseTheCorrectAnswer.interface';
-import { Title } from './QuizzesStyles';
+import { TQuiz } from '@interfaces/quizzes.interface';
+import {
+  Title,
+  QuizTypeWrapper,
+  IconWrapper,
+  ContentWrapper,
+  QuizList,
+  QuizItem,
+  QuizName,
+} from './QuizzesStyles';
 
 export const Quizzes = () => {
   const currentURL = useLocation().pathname;
   let { moduleId, moduleName } = useParams();
-
   const [quizzes, setQuizzes] = useState<TQuiz[] | undefined>([]) || [];
 
   useEffect(() => {
@@ -22,34 +33,59 @@ export const Quizzes = () => {
     <>
       <Title>Вікторини модуля: {moduleName}</Title>
 
-      <div>
+      <QuizTypeWrapper>
         <h2>Вибрати одну вірну відповідь</h2>
-        <ul>
-          {quizzes?.map(({ _id, name, quizType }) => {
-            if (quizType === 'chooseTheCorrectAnswer') {
-              return (
-                <li>
-                  <h3>{name}</h3>
-                  <button>
-                    <Link to={`${currentURL}/${name}/${_id}`}>Почати</Link>
-                  </button>
-                </li>
-              );
-            }
-          })}
-        </ul>
-      </div>
 
-      <div>
-        <h2>Тестовий</h2>
-        <ul>
-          {quizzes?.map(quiz => {
-            if (quiz.quizType === 'testType') {
-              return <li>{quiz.name}</li>;
-            }
-          })}
-        </ul>
-      </div>
+        <QuizList>
+          {quizzes
+            ?.filter(quiz => quiz.quizType === 'chooseTheCorrectAnswer')
+            .map(({ _id, name }) => (
+              <QuizItem key={_id}>
+                <IconWrapper>
+                  <FormatListBulletedIcon />
+                </IconWrapper>
+
+                <ContentWrapper>
+                  <QuizName>{name}</QuizName>
+                  <Button type="button">
+                    <Link
+                      to={`${currentURL}/toChooseTheCorrectAnswer/${name}/${_id}`}
+                    >
+                      Почати
+                    </Link>
+                  </Button>
+                </ContentWrapper>
+              </QuizItem>
+            ))}
+        </QuizList>
+      </QuizTypeWrapper>
+
+      <QuizTypeWrapper>
+        <h2>Переклад речення</h2>
+
+        <QuizList>
+          {quizzes
+            ?.filter(quiz => quiz.quizType === 'translate-sentences')
+            .map(({ _id, name }) => (
+              <QuizItem key={_id}>
+                <IconWrapper>
+                  <GTranslateIcon />
+                </IconWrapper>
+
+                <ContentWrapper>
+                  <QuizName>{name}</QuizName>
+                  <Button type="button">
+                    <Link
+                      to={`${currentURL}/translateSentences/${name}/${_id}`}
+                    >
+                      Почати
+                    </Link>
+                  </Button>
+                </ContentWrapper>
+              </QuizItem>
+            ))}
+        </QuizList>
+      </QuizTypeWrapper>
     </>
   );
 };

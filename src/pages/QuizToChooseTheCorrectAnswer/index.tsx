@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getQuizById } from '@api/quizzes/getQuizzes';
+import { getQuizById } from '@api/quizzes/chooseTheCorrectAnswer';
 import ProgressBar from '@components/ProgressBar';
 import Button from '@components/Button';
-import { TQuestion } from '@interfaces/quizToChooseTheCorrectAnswer.interface';
+import { IQuestion } from '@interfaces/quizToChooseTheCorrectAnswer.interface';
 import QuestionCard from './components/QuestionCard';
 import UserAnswers from './components/UserAnswers';
 import { Wrapper } from './QuizToChooseTheCorrectAnswer.styles';
@@ -13,7 +13,7 @@ export const QuizToChooseTheCorrectAnswer = () => {
 
   const [gameOver, setGameOver] = useState(true);
   const [showQuiz, setShowQuiz] = useState(false);
-  const [questions, setQuestions] = useState<TQuestion[]>([]);
+  const [questions, setQuestions] = useState<IQuestion[]>([]);
   const [userAnswer, setUserAnswer] = useState('');
   const [number, setNumber] = useState(0);
   const [score, setScore] = useState(0);
@@ -23,11 +23,11 @@ export const QuizToChooseTheCorrectAnswer = () => {
 
   useEffect(() => {
     (async () => {
-      const res = await getQuizById(quizId);
+      const data = await getQuizById(quizId);
 
-      if (res?.data !== undefined) {
-        setQuestions(res.data);
-        setTotalQuestion(res.data.length);
+      if (data !== undefined) {
+        setQuestions(data);
+        setTotalQuestion(data.length);
       }
 
       setGameOver(false);

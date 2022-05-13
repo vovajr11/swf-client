@@ -5,39 +5,33 @@ import { Formik, FieldArray } from 'formik';
 import Input from '@components/Input';
 import Button from '@components/Button';
 import ModuleSelect from '@components/ModuleSelect';
-import { createQuiz } from '@api/quizzes/chooseTheCorrectAnswer';
+import { IQuestion } from '@interfaces/quizTranslateSentences.interface';
+import { createQuiz } from '@api/quizzes/translateSentences';
 import { useInput } from '@hooks/useInput';
-import { Answers } from './ChooseTheCorrectAnswerForm.styles';
+// import { Answers } from './ChooseTheCorrectAnswerForm.styles';
 import QuestionList from './QuestionList';
-
-type TData = {
-  id: string;
-  question: string;
-  correctAnswer: string;
-  answers: string[];
-};
 
 interface IForm {
   quizName: string;
-  question: string;
-  correctAnswer: string;
-  answer: string;
+  sentenceToBeTranslated: string;
+  translatedSentence: string;
 }
 
 const Form = () => {
   const initialValues: IForm = {
     quizName: '',
-    question: '',
-    correctAnswer: '',
-    answer: '',
+    sentenceToBeTranslated: '',
+    translatedSentence: '',
   };
 
-  const [answers, setAnswers] = useState(['']);
-  const [data, setData] = useState<TData[]>([]);
+  const [data, setData] = useState<IQuestion[]>([]);
   const [moduleId, setModuleId] = useState('');
 
-  const question = useInput('', { isEmpty: true, minLength: 3 });
-  const correctAnswer = useInput('', { isEmpty: true, minLength: 3 });
+  const inputSentenceToBeTranslated = useInput('', {
+    isEmpty: true,
+    minLength: 3,
+  });
+  const inputTranslatedSentence = useInput('', { isEmpty: true, minLength: 3 });
 
   return (
     <Formik
@@ -46,8 +40,8 @@ const Form = () => {
         createQuiz({
           moduleId,
           name: quizName,
-          quizType: 'chooseTheCorrectAnswer',
-          questions: data,
+          quizType: 'translate-sentences',
+          data,
         });
       }}
     >
@@ -82,63 +76,27 @@ const Form = () => {
                     <ModuleSelect setModuleId={setModuleId} />
                   </Box>
 
-                  <Input
-                    type="text"
-                    name="question"
-                    placeholder="Питання"
-                    value={values.question}
-                    onChange={e => {
-                      handleChange(e);
-                      question.onChange(e);
-                    }}
-                  />
-
-                  <Input
-                    type="text"
-                    name="correctAnswer"
-                    placeholder="Правильна відповідь"
-                    value={values.correctAnswer}
-                    onChange={e => {
-                      handleChange(e);
-                      correctAnswer.onChange(e);
-                    }}
-                  />
-
-                  <Answers>
-                    {answers.length > 1 ? (
-                      <ul>
-                        {answers.slice(1).map(answer => (
-                          <li key={uuidv4()}>
-                            <p>{answer}</p>
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p>Додай відповіді</p>
-                    )}
-                  </Answers>
-
-                  <Box
-                    sx={{ display: 'flex', gap: '10px', marginBottom: '30px' }}
-                  >
-                    <Button
-                      type="button"
-                      size="sm"
-                      onClick={() =>
-                        setAnswers(prevState => {
-                          return [...prevState, values.answer];
-                        })
-                      }
-                    >
-                      Додати відповідь
-                    </Button>
+                  <Box sx={{ marginBottom: '20px' }}>
+                    <Input
+                      type="text"
+                      name="sentenceToBeTranslated"
+                      placeholder="sentenceToBeTranslated"
+                      value={values.sentenceToBeTranslated}
+                      onChange={e => {
+                        handleChange(e);
+                        inputSentenceToBeTranslated.onChange(e);
+                      }}
+                    />
 
                     <Input
                       type="text"
-                      name="answer"
-                      placeholder="Відповідь"
-                      value={values.answer}
-                      onChange={handleChange}
+                      name="translatedSentence"
+                      placeholder="translatedSentence"
+                      value={values.translatedSentence}
+                      onChange={e => {
+                        handleChange(e);
+                        inputTranslatedSentence.onChange(e);
+                      }}
                     />
                   </Box>
 
@@ -146,9 +104,8 @@ const Form = () => {
                     type="button"
                     size="sm"
                     disabled={
-                      question.minLengthError ||
-                      correctAnswer.minLengthError ||
-                      answers.length === 1
+                      inputSentenceToBeTranslated.minLengthError ||
+                      inputTranslatedSentence.minLengthError
                     }
                     onClick={() => {
                       setData(prevState => {
@@ -156,13 +113,13 @@ const Form = () => {
                           ...prevState,
                           {
                             id: uuidv4(),
-                            question: values.question,
-                            correctAnswer: values.correctAnswer,
-                            answers: answers.slice(1),
+                            sentenceToBeTranslated:
+                              values.sentenceToBeTranslated,
+                            translatedSentence: values.translatedSentence,
                           },
                         ];
                       });
-                      setAnswers(['']);
+
                       resetForm();
                     }}
                   >

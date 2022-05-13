@@ -38,9 +38,11 @@ export const coursesSlice = createSlice({
 
       state.coursesForAdmin
         .flatMap(({ modules }) => modules)
-        .map(module =>
-          module._id === moduleId ? module.chapters.push(resData) : module,
-        );
+        .map(module => {
+          return module._id === moduleId
+            ? module.chapters.push(resData)
+            : module;
+        });
 
       notificationTypes.notificationSuccess('Тему створено успішно!');
     });

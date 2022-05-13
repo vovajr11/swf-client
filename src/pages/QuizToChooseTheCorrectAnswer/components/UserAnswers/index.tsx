@@ -1,6 +1,6 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { TQuestion } from '@interfaces/quizToChooseTheCorrectAnswer.interface';
+import { IQuestion } from '@interfaces/quizToChooseTheCorrectAnswer.interface';
 import {
   Score,
   QuestionList,
@@ -16,7 +16,7 @@ import { Box } from '@mui/material';
 
 interface IProps {
   score: number;
-  questions: TQuestion[];
+  questions: IQuestion[];
   userAnswers: string[];
 }
 

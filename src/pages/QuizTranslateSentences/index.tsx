@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { IQuestion } from '@interfaces/quizTranslateSentences.interface';
 import Button from '@components/Button';
 import ProgressBar from '@components/ProgressBar';
 import QuestionCard from './components/QuestionCard';
 import UserAnswers from './components/UserAnswers';
-import data from './data';
+import { getQuizById } from '@api/quizzes/translateSentences';
 import { Wrapp } from './QuizTranslateSentences.styles';
 
 export const QuizTranslateSentences = () => {
+  let { quizId } = useParams();
+
   const [gameOver, setGameOver] = useState(true);
   const [showQuiz, setShowQuiz] = useState(false);
   const [questions, setQuestions] = useState<IQuestion[]>([]);
@@ -19,7 +22,7 @@ export const QuizTranslateSentences = () => {
 
   useEffect(() => {
     (async () => {
-      //   const res = await getQuizById(quizId);
+      const data = await getQuizById(quizId);
 
       if (data !== undefined) {
         setQuestions(data);
