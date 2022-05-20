@@ -10,7 +10,7 @@
     "exact": true
   },
   {
-    "path": "/profile",
+    "path": "/user-profile",
     "label": "Профіль",
     "exact": true
   }

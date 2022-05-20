@@ -12,7 +12,6 @@ import {
   UserAnswer,
   CorrectAnswer,
 } from './UserAnswers.styles';
-import { Box } from '@mui/material';
 
 interface IProps {
   score: number;

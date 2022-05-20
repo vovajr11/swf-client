@@ -18,6 +18,7 @@ const createChunk = (componentName: string) => {
 
 const StartPage = createChunk('Start');
 const HomePage = createChunk('Home');
+const UserProfilePage = createChunk('UserProfile');
 const NotFoundPage = createChunk('NotFound');
 const CreateCoursePage = createChunk('CreateCourse');
 const CoursesPage = createChunk('Courses');
@@ -58,6 +59,11 @@ const App = () => {
           <Route
             path="home"
             element={<ProtectedRoute children={<HomePage />} />}
+          />
+
+          <Route
+            path="user-profile"
+            element={<ProtectedRoute children={<UserProfilePage />} />}
           />
 
           <Route

@@ -1,5 +1,5 @@
 export interface IQuestion {
-  id: string;
+  _id: string;
   sentenceToBeTranslated: string;
   translatedSentence: string;
 }

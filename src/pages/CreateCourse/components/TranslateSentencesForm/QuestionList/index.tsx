@@ -29,9 +29,9 @@ const QuestionList = ({ questions, updateData }: IProps) => {
             ref={provided.innerRef}
           >
             {questions.map(
-              ({ id, translatedSentence, sentenceToBeTranslated }, index) => {
+              ({ _id, translatedSentence, sentenceToBeTranslated }, index) => {
                 return (
-                  <Draggable key={id} draggableId={id} index={index}>
+                  <Draggable key={_id} draggableId={_id} index={index}>
                     {provided => (
                       <li
                         ref={provided.innerRef}

@@ -41,7 +41,7 @@ const Form = () => {
           moduleId,
           name: quizName,
           quizType: 'translate-sentences',
-          data,
+          questions: data,
         });
       }}
     >
@@ -112,7 +112,7 @@ const Form = () => {
                         return [
                           ...prevState,
                           {
-                            id: uuidv4(),
+                            _id: uuidv4(),
                             sentenceToBeTranslated:
                               values.sentenceToBeTranslated,
                             translatedSentence: values.translatedSentence,

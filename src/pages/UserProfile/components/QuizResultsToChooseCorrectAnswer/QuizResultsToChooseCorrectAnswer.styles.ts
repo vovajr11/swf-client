@@ -23,6 +23,7 @@ export const QuestionCard = styled.li`
   @media (${device.laptop}) {
     flex: 0 1 calc((100% / 2) - 3.5rem);
     margin-bottom: 30px;
+    gap: 20px;
   }
 `;
 
@@ -44,10 +45,12 @@ export const Answer = styled.li`
   background-color: orange;
   border-radius: 10px;
   margin-bottom: 20px;
+  text-align: center;
 `;
 
 export const AnswerInfo = styled.div`
   flex: 1;
+  text-align: center;
 `;
 
 export const UserAnswer = styled.h4`

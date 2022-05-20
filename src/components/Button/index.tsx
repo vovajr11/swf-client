@@ -4,7 +4,9 @@ import { theme } from '@theme/index';
 import { sizes, variants } from './ButtonStyles';
 
 interface ButtonProps {
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  onClick?:
+    | React.MouseEventHandler<HTMLButtonElement>
+    | React.Dispatch<React.SetStateAction<{}>>;
   children?: React.ReactNode;
   className?: string;
   size?: 'sm' | 'md' | 'lg';

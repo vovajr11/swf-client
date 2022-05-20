@@ -6,10 +6,12 @@ import ProgressBar from '@components/ProgressBar';
 import QuestionCard from './components/QuestionCard';
 import UserAnswers from './components/UserAnswers';
 import { getQuizById } from '@api/quizzes/translateSentences';
+import { saveTheResultOfTheQuiz } from '@api/user';
+import { useAppSelector } from '@hooks/appHook';
 import { Wrapp } from './QuizTranslateSentences.styles';
 
 export const QuizTranslateSentences = () => {
-  let { quizId } = useParams();
+  let { quizId = '', quizName = '' } = useParams();
 
   const [gameOver, setGameOver] = useState(true);
   const [showQuiz, setShowQuiz] = useState(false);
@@ -19,6 +21,8 @@ export const QuizTranslateSentences = () => {
   const [progress, setProgress] = useState(0);
   const [totalQuestion, setTotalQuestion] = useState(0);
   const [userAnswers, setUserAnswers] = useState(['']);
+
+  const userId = useAppSelector(state => state.session.user.id);
 
   useEffect(() => {
     (async () => {
@@ -49,6 +53,15 @@ export const QuizTranslateSentences = () => {
     if (nextQ === totalQuestion) {
       setGameOver(true);
       setShowQuiz(true);
+
+      saveTheResultOfTheQuiz({
+        userId,
+        quizId,
+        quizName,
+        quizType: 'translate-sentences',
+        score: null,
+        answers: userAnswers.slice(1),
+      });
     } else {
       setQuestionNumber(nextQ);
     }

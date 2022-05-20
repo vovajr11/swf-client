@@ -6,7 +6,7 @@ interface ICreateQuiz {
   moduleId: string;
   name: string;
   quizType: string;
-  data: IQuestion[];
+  questions: IQuestion[];
 }
 
 interface IGetQuiz {
@@ -25,9 +25,25 @@ export const getQuizById = async (id: string | undefined) => {
   }
 };
 
-export const createQuiz = async (data: ICreateQuiz) => {
+export const createQuiz = async ({
+  questions,
+  name,
+  moduleId,
+  quizType,
+}: ICreateQuiz) => {
   try {
-    await axios.post('/quizzes/add-quiz-translate-sentences', data);
+    const questionsForBackend = questions.map(
+      ({ _id, ...keepAttrs }) => keepAttrs,
+    );
+
+    const dataForBackend = {
+      moduleId,
+      name,
+      quizType,
+      questions: questionsForBackend,
+    };
+
+    await axios.post('/quizzes/add-quiz-translate-sentences', dataForBackend);
     notificationTypes.notificationSuccess('Квіз додано!');
   } catch (error: any) {
     notificationTypes.notificationWarn(error.response.data.message);

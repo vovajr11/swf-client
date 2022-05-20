@@ -49,7 +49,7 @@ const CreateCourseForm = ({ closeTheForm }: IProps) => {
           <ErrorMessage name="description" />
 
           <Button type="submit" variant="contained" size="sm">
-            Ввійти
+            Створити
           </Button>
         </Form>
       )}

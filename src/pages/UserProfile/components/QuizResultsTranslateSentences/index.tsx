@@ -1,23 +1,36 @@
+import { useState, useEffect } from 'react';
+import { getQuizById } from '@api/quizzes/translateSentences';
 import { IQuestion } from '@interfaces/quizTranslateSentences.interface';
-import { QuestionList, QuestionItem, UserAnswer } from './UserAnswers.styles';
+import {
+  QuestionList,
+  QuestionItem,
+  UserAnswer,
+} from './QuizResultsTranslateSentences.styles';
 
 interface IProps {
-  questions: IQuestion[];
-  userAnswers: string[];
+  quizId: string;
+  quizName: string;
+  answers: string[];
 }
 
-const testArr = [
-  'You don’t try to learn English',
-  'He doesn’t have this information',
-  'He doesn’t want to try to find a good job',
-  'My friend doesn’t think so',
-  'We don’t want to live in another place',
-];
+const QuizResultsTranslateSentences = ({
+  quizId,
+  quizName,
+  answers: userAnswers,
+}: IProps) => {
+  const [questions, setQuestions] = useState<IQuestion[] | undefined>();
 
-const UserAnswers = ({ questions, userAnswers }: IProps) => {
+  useEffect(() => {
+    (async () => {
+      const data = await getQuizById(quizId);
+
+      setQuestions(data);
+    })();
+  }, []);
+
   return (
     <QuestionList>
-      {questions.map(
+      {questions?.map(
         ({ _id, sentenceToBeTranslated, translatedSentence }, idx) => (
           <QuestionItem key={_id}>
             <div className="col">
@@ -36,4 +49,4 @@ const UserAnswers = ({ questions, userAnswers }: IProps) => {
   );
 };
 
-export default UserAnswers;
+export default QuizResultsTranslateSentences;

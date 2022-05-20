@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getQuizById } from '@api/quizzes/chooseTheCorrectAnswer';
+import { saveTheResultOfTheQuiz } from '@api/user';
 import ProgressBar from '@components/ProgressBar';
 import Button from '@components/Button';
 import { IQuestion } from '@interfaces/quizToChooseTheCorrectAnswer.interface';
+import { useAppSelector } from '@hooks/appHook';
 import QuestionCard from './components/QuestionCard';
 import UserAnswers from './components/UserAnswers';
 import { Wrapper } from './QuizToChooseTheCorrectAnswer.styles';
 
 export const QuizToChooseTheCorrectAnswer = () => {
-  let { quizId } = useParams();
+  let { quizId = '', quizName = '' } = useParams();
 
   const [gameOver, setGameOver] = useState(true);
   const [showQuiz, setShowQuiz] = useState(false);
@@ -20,6 +22,8 @@ export const QuizToChooseTheCorrectAnswer = () => {
   const [progress, setProgress] = useState(0);
   const [totalQuestion, setTotalQuestion] = useState(0);
   const [userAnswers, setUserAnswers] = useState(['']);
+
+  const userId = useAppSelector(state => state.session.user.id);
 
   useEffect(() => {
     (async () => {
@@ -41,6 +45,14 @@ export const QuizToChooseTheCorrectAnswer = () => {
   }, [number, questions.length]);
 
   const nextQuestion = () => {
+    setUserAnswers(prevState => {
+      return [...prevState, userAnswer];
+    });
+
+    if (userAnswer === questions[number].correctAnswer) {
+      setScore(prevState => prevState + 1);
+    }
+
     const nextQ = number + 1;
 
     if (nextQ === totalQuestion) {
@@ -51,15 +63,16 @@ export const QuizToChooseTheCorrectAnswer = () => {
     }
   };
 
-  const checkAnswer = () => {
-    if (userAnswer === questions[number].correctAnswer) {
-      setScore(prevState => prevState + 1);
-    }
-
-    setUserAnswers(prevState => {
-      return [...prevState, userAnswer];
+  if (showQuiz) {
+    saveTheResultOfTheQuiz({
+      userId,
+      quizId,
+      quizName,
+      quizType: 'chooseTheCorrectAnswer',
+      score,
+      answers: userAnswers.slice(1),
     });
-  };
+  }
 
   return (
     <Wrapper>
@@ -75,10 +88,7 @@ export const QuizToChooseTheCorrectAnswer = () => {
             disabled={userAnswer === '' ? true : false}
             className="next-question"
             type="button"
-            onClick={() => {
-              nextQuestion();
-              checkAnswer();
-            }}
+            onClick={nextQuestion}
           >
             {totalQuestion === number + 1 ? 'Finish' : 'Next'}
           </Button>
